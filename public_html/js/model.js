@@ -22,38 +22,38 @@ const model = (function () {
 
     // Konstruktoren für Daten-Objekte
     function Blog(blog){
-        console.log("Erstellen eines Blogobjekts..");
+        console.log("Erstellen eines Blogobjekts über den Konstruktor..");
 
-        this.blogid = undefined;
-        this.blogname = undefined;
-        this.postcount = undefined;
-        this.blogcreate = undefined;
-        this.blogedit = undefined;
-        this.url = undefined;
+        this.blogid = blog.id;
+        this.blogname = blog.name;
+        this.postcount = blog.posts.totalItems;
+        this.blogcreate = blog.published;
+        this.blogedit = blog.updated;
+        this.url = blog.selfLink;
     }
 
     function Post(post){
-        console.log("Erstellen eines Postobjekts..")
+        console.log("Erstellen eines Postobjekts über den Konstruktor..")
 
-        this.postid = undefined;
-        this.blogid = undefined;
-        this.title = undefined;
-        this.postcreate = undefined;
-        this.postedit = undefined;
-        this.contents = undefined;
-        this.comments = undefined;
+        this.postid = post.id;
+        this.blogid = post.blog.id;
+        this.title = post.title;
+        this.postcreate = post.published;
+        this.postedit = post.updated;
+        this.contents = post.content;
+        this.comments = post.replies.totalItems;
     }
 
     function Comment(comment){
-        console.log("Erstellen eines Commentobjekts..")
+        console.log("Erstellen eines Commentobjekts über den Konstruktor..")
 
-        this.commentid = undefined;
-        this.blogid = undefined;
-        this.postid = undefined;
-        this.author = undefined;
-        this.commentcreate = undefined;
-        this.commentedit = undefined;
-        this.content = undefined;
+        this.commentid = comment.id;
+        this.blogid = comment.blog.id;
+        this.postid = comment.post.id;
+        this.author = comment.author;
+        this.commentcreate = comment.published;
+        this.commentedit = comment.updated;
+        this.content = comment.content;
     }
 
     // Oeffentliche Methoden
@@ -85,13 +85,17 @@ const model = (function () {
                 'path': pathGetBlogs
             });
             // Execute the API request.
-            request.execute((result));
+            request.execute((result) => {
+                var blogs = [];
+                if(result.items !== undefined){
+                    for (let b of result.items){
+                        blogs.push(new Blog(b));
+                    }
+                }
+                callback(blogs);
 
-            console.log("Test");
-            console.log(result.items);
-            //=> {
-             //   callback(result.items);
-            //});
+                //callback(result.items);
+            });
         },
 
         // Liefert den Blog mit der Blog-Id bid
@@ -114,6 +118,7 @@ const model = (function () {
             });
 
             request.execute((result) => {
+
                 callback(result.items);
             });
         },
