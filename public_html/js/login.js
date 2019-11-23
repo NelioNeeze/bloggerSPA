@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -25,7 +25,7 @@
         // 'scope' field specifies space-delimited list of access scopes.
         gapi.client.init({
             'discoveryDocs': [discoveryUrl],
-            'clientId': '<IHRE CLIENT ID>',
+            'clientId': '26901513547-8ae4n8ut9sh5l7839qjsknf4nminls6k.apps.googleusercontent.com',
             'scope': SCOPE
         }).then(function () {
             GoogleAuth = gapi.auth2.getAuthInstance();

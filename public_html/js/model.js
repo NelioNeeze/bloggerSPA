@@ -85,9 +85,13 @@ const model = (function () {
                 'path': pathGetBlogs
             });
             // Execute the API request.
-            request.execute((result) => {
-                callback(result.items);
-            });
+            request.execute((result));
+
+            console.log("Test");
+            console.log(result.items);
+            //=> {
+             //   callback(result.items);
+            //});
         },
 
         // Liefert den Blog mit der Blog-Id bid
