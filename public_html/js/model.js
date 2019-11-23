@@ -17,7 +17,21 @@ const model = (function () {
     // long = false: 24.10.2018
     // long = true: Mittwoch, 24. Oktober 2018, 12:21
     function formatDate(date, long) {
-        // Hier kommt Ihr Code hin
+        var date1 = new Date(date);
+        //Kurzes Format
+        if(!long){
+            let newDate = date1.getDate() + "." + date1.getMonth() + "." + date1.getFullYear();
+            return newDate;
+        }
+        //Langes Format
+        else{
+            let weekdays =
+                ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+            let months =
+                ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+
+            return weekdays[date1.getDay()] + ", " + date1.getDate() + "." + months[date1.getMonth()] + " " + date1.getFullYear()+ ", " + date1.getHours() + ":" + date1.getMinutes()
+        }
     }
 
     // Konstruktoren für Daten-Objekte
@@ -28,8 +42,12 @@ const model = (function () {
         this.blogname = blog.name;
         this.postcount = blog.posts.totalItems;
         this.blogcreate = blog.published;
-        this.blogedit = blog.updated;
+        this.blogedit = blog.updated, true;
         this.url = blog.selfLink;
+        this.longCreateDate = formatDate(blog.published, true);
+        this.shortCreateDate = formatDate(blog.published, false);
+        this.longEditDate = formatDate(blog.updated, true);
+        this.shortEditDate = formatDate(blog.updated, false);
     }
 
     function Post(post){
@@ -42,6 +60,10 @@ const model = (function () {
         this.postedit = post.updated;
         this.contents = post.content;
         this.comments = post.replies.totalItems;
+        this.longCreateDate = formatDate(post.published, true);
+        this.shortCreateDate = formatDate(post.published, false);
+        this.longEditDate = formatDate(post.updated, true);
+        this.shortEditDate = formatDate(post.updated, false);
     }
 
     function Comment(comment){
@@ -54,6 +76,10 @@ const model = (function () {
         this.commentcreate = comment.published;
         this.commentedit = comment.updated;
         this.content = comment.content;
+        this.longCreateDate = formatDate(comment.published, true);
+        this.shortCreateDate = formatDate(comment.published, false);
+        this.longEditDate = formatDate(comment.updated, true);
+        this.shortEditDate = formatDate(comment.updated, false);
     }
 
     // Oeffentliche Methoden
@@ -87,10 +113,8 @@ const model = (function () {
             // Execute the API request.
             request.execute((result) => {
                 var blogs = [];
-                if(result.items !== undefined){
-                    for (let b of result.items){
-                        blogs.push(new Blog(b));
-                    }
+                for (let b of result.items){
+                    blogs.push(new Blog(b));
                 }
                 callback(blogs);
 
@@ -118,8 +142,13 @@ const model = (function () {
             });
 
             request.execute((result) => {
+                var posts = [];
+                for (let p of result.items){
+                    posts.push(new Post(p));
+                }
+                callback(posts);
 
-                callback(result.items);
+                //callback(result.items);
             });
         },
 
@@ -144,7 +173,15 @@ const model = (function () {
             });
 
             request.execute((result) => {
-                callback(result.items);
+                var comments = [];
+                if(result){
+                    for (let c of result.items){
+                        comments.push(new Comment(c));
+                    }
+                }
+                callback(comments);
+
+                //callback(result.items);
             });
         },
 

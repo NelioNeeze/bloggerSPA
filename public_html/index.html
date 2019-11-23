@@ -60,8 +60,8 @@ and open the template in the editor.
                     <div>
                         <h2>%blogname</h2>
                         <p>%postcount</p>
-                        <p>Erstellt am: %blogcreate</p>
-                        <p>Bearbeitet am: %blogedit</p>
+                        <p>Erstellt am: %shortCreateDate</p>
+                        <p>Bearbeitet am: %shortEditDate</p>
                         <button type="button">Google Blogansicht</button>
                     </div>
             </div>
@@ -75,8 +75,8 @@ and open the template in the editor.
                     <article>
                             <header>
                                  <h3>%postname</h3>
-                                 <h5><p>Erstellt am %postcreate</p>
-                                     <p>Bearbeitet am %postedit</p>
+                                 <h5><p>Erstellt am %shortCreateDate</p>
+                                     <p>Bearbeitet am %shortEditDate</p>
                                      <p>%comments Kommentare</p></h5>
                             </header>
                           
@@ -99,8 +99,8 @@ and open the template in the editor.
                         
                     <header>
                             <h3>%postname</h3>
-                            <h5><p>Erstellt am %postcreate</p>
-                                <p>Bearbeitet am %postedit</p>
+                            <h5><p>Erstellt am %LongCreateDate</p>
+                                <p>Bearbeitet am %LongEditDate</p>
                                 <p>%comments Kommentare</p></h5>
                                                 
                             <nav>
@@ -116,7 +116,7 @@ and open the template in the editor.
                 
                 <article>
                     <header>
-                            <p>Kommentar von %author am %datum
+                            <p>Kommentar von %author am %longCreateDate
                     </header>
 			
                     <section>

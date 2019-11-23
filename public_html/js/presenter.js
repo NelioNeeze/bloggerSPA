@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -31,7 +31,8 @@ const presenter = (function () {
             for (let b of blogs) {
                 console.log(b);
             }
-            blogId = blogs[0].id
+
+            blogId = blogs[0].blogid;
             model.getAllPostsOfBlog(blogId, (posts) => {
                 console.log("--------------- Alle Posts des ersten Blogs --------------- ");
                 if (!posts)
@@ -39,7 +40,7 @@ const presenter = (function () {
                 for (let p of posts) {
                     console.log(p);
                 }
-                postId = posts[1].id;
+                postId = posts[2].postid;
                 model.getAllCommentsOfPost(blogId, postId, (comments) => {
                     console.log("--------------- Alle Comments des zweiten Post --------------- ");
                     if (!comments)
