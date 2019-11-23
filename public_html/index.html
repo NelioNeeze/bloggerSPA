@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html>
+    <head>
+        <title>Blogger</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="img/favicon.ico">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script async defer src="https://apis.google.com/js/api.js"></script>
+
+        <script src="./js/login.js" defer></script>
+        <script src="./js/model.js"defer> </script>
+        <script src="./js/presenter.js"defer></script>
+        <script src="./js/router.js"defer></script>
+    </head>
+
+    <body>
+	<header>
+        <button id="sign-in-or-out-button">Anmelden</button>
+	</header>
+		
+	<main>
+					
+	</main>
+		
+	<footer>
+            <p>
+		Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
+            </p>
+	</footer>
+	
+        
+        
+        
+        <div id="templates" hidden>
+                    
+            <!-- Header -->
+            <div id="header">
+                    <!-- Header Begrüßung / An-/Abmeldung-->
+                    <div>
+                        <h4>%greeting</h4>
+                        <button id="sign-in-or-out-button" type="button">%logging</button>
+                    </div>
+			
+                    <!-- Header Navigation-->
+                    <nav>
+                        <img src="./img/menu.png" alt="Menu" width="24">
+                        <ul>
+                        </ul>
+                    </nav>
+			
+                    <!--- Header Bloginformationen --->
+                    <div>
+                        <h2>%blogname</h2>
+                        <p>%postcount</p>
+                        <p>Erstellt am: %blogcreate</p>
+                        <p>Bearbeitet am: %blogedit</p>
+                        <button type="button">Google Blogansicht</button>
+                    </div>
+            </div>
+                
+            <!-- Blogübersicht -->
+            <div id="bloguebersicht">
+                    <nav>
+                        <button type="button">Neuer Post</button>
+                    </nav>
+				
+                    <article>
+                            <header>
+                                 <h3>%postname</h3>
+                                 <h5><p>Erstellt am %postcreate</p>
+                                     <p>Bearbeitet am %postedit</p>
+                                     <p>%comments Kommentare</p></h5>
+                            </header>
+                          
+                            <footer>
+                                <nav>
+                                     <button type="button">Ansehen</button>
+                                     <button type="button">Bearbeiten</button>
+                                     <button type="button">Löschen</button>
+                                </nav>
+                            </footer>
+                    </article>	
+            </div>
+                    
+            <!-- Detailansicht -->
+            <div id="detailansicht">
+                <article>
+                    <nav>
+                            <button type="button">Blogübersicht</button>
+                    </nav>
+                        
+                    <header>
+                            <h3>%postname</h3>
+                            <h5><p>Erstellt am %postcreate</p>
+                                <p>Bearbeitet am %postedit</p>
+                                <p>%comments Kommentare</p></h5>
+                                                
+                            <nav>
+                                 <button type="button">Bearbeiten</button>
+				<button type="button">Löschen</button>
+                            </nav>
+                    </header>
+                        
+                    <section>
+                            
+                    </section>
+                </article>
+                
+                <article>
+                    <header>
+                            <p>Kommentar von %author am %datum
+                    </header>
+			
+                    <section>
+                            
+                    </section>
+                         
+                    <footer>	
+                            <button type="button">Löschen</button>
+                    </footer>
+                </article>
+            </div>
+                     
+        </div>
+        
+        </body>
+</html>
