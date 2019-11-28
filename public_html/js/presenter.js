@@ -69,6 +69,15 @@ const presenter = (function () {
         owner = undefined;
     }
 
+    function replace(id, element){
+        let main = document.getElementById(id);
+        let content = main.firstElementChild;
+        if(content)
+            content.remove();
+        if(element)
+            main.append(element);
+    }
+
 
     //Oeffentliche Methoden
     return {
