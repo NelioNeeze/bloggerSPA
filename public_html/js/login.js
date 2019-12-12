@@ -25,7 +25,7 @@
         // 'scope' field specifies space-delimited list of access scopes.
         gapi.client.init({
             'discoveryDocs': [discoveryUrl],
-            'clientId': '26901513547-8ae4n8ut9sh5l7839qjsknf4nminls6k.apps.googleusercontent.com',
+            'clientId': '444985071642-13c4kbmbqiaj2bln04fh3ip9r1uqmrg3.apps.googleusercontent.com',
             'scope': SCOPE
         }).then(function () {
             GoogleAuth = gapi.auth2.getAuthInstance();
