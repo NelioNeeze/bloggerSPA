@@ -16,21 +16,19 @@ const presenter = (function () {
     function initPage() {
         console.log("Presenter: Aufruf von initPage()");
 
-
         // Hier werden zunächst nur zu Testzwecken Daten vom Model abgerufen und auf der Konsole ausgegeben 
-         
+
         // Nutzer abfragen und Anzeigenamen als owner setzen
         model.getSelf((result) => {
             owner = result.displayName;
             console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
-
-            let header = document.getElementById("header").cloneNode(true);
-            header.removeAttribute(id);
-
-            console.log("H4?");
-            console.log(header.firstChild.nodeType);
-
         });
+
+        let header = document.getElementById("header").cloneNode(true);
+        header.removeAttribute(id);
+
+        console.log("H4?");
+        console.log(header.firstChild.firstChild.nodeType);
 
         model.getAllBlogs((blogs) => {
             console.log("--------------- Alle Blogs --------------- ");

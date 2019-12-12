@@ -30,7 +30,7 @@ const model = (function () {
             let months =
                 ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
-            return weekdays[date1.getDay()] + ", " + date1.getDate() + "." + months[date1.getMonth()] + " " + date1.getFullYear()+ ", " + date1.getHours() + ":" + date1.getMinutes()
+            return weekdays[date1.getDay()] + ", " + date1.getDate() + "." + months[date1.getMonth() - 1] + " " + date1.getFullYear()+ ", " + date1.getHours() + ":" + date1.getMinutes()
         }
     }
 
