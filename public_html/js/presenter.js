@@ -16,7 +16,7 @@ const presenter = (function () {
     function initPage() {
         console.log("Presenter: Aufruf von initPage()");
 
-        // Hier werden zunächst nur zu Testzwecken Daten vom Model abgerufen und auf der Konsole ausgegeben 
+        // Hier werden zunächst nur zu Testzwecken Daten vom Model abgerufen und auf der Konsole ausgegeben
 
         // Nutzer abfragen und Anzeigenamen als owner setzen
         model.getSelf((result) => {
@@ -25,16 +25,25 @@ const presenter = (function () {
             document.getElementById("greeting").innerHTML = "Greetings, " + owner;
         });
 
-        let nav = document.getElementById("navigation");
-        let info = document.getElementById("bloginfo");
+        let nav = document.getElementById("navigation").cloneNode(true);
+        nav.removeAttribute("id");
+        let ul = nav.firstElementChild.cloneNode(true);
+        let li = ul.firstElementChild.cloneNode(true);
+
+        //Remove LI in UL
+        nav.firstElementChild.firstElementChild.remove();
+
 
         model.getAllBlogs((blogs) => {
-            console.log("--------------- Alle Blogs --------------- ");
             if (!blogs)
                 return;
             for (let b of blogs) {
                 console.log(b);
+                let litemp = li.cloneNode(true);
+                setDataInfo(litemp, b);
+                nav.firstElementChild.append(litemp);
             }
+            replace("navmenu", nav.firstElementChild);
 
             blogId = blogs[0].blogid;
             model.getAllPostsOfBlog(blogId, (posts) => {
@@ -55,18 +64,22 @@ const presenter = (function () {
                 });
             });
         });
-        
+
+        //TODO
+        let info = document.getElementById("bloginfo");
+
         // Das muss später an geeigneter Stelle in Ihren Code hinein.
         init = true;
         //Falls auf Startseite, navigieren zu Uebersicht
         if (window.location.pathname === "/")
             router.navigateToPage('/blogOverview/' + blogId);
     }
+
     // Sorgt dafür, dass bei einem nicht-angemeldeten Nutzer nur noch der Name der Anwendung
     // und der Login-Button angezeigt wird.
     function loginPage() {
         console.log("Presenter: Aufruf von loginPage()");
-        if(owner!== undefined) console.log(`Presenter: Nutzer*in ${owner} hat sich abgemeldet.`);
+        if (owner !== undefined) console.log(`Presenter: Nutzer*in ${owner} hat sich abgemeldet.`);
         init = false;
         blogId = -1;
         postId = -1;
@@ -74,12 +87,12 @@ const presenter = (function () {
     }
 
     //Ersetzt ein Element durch ein anderes
-    function replace(id, element){
+    function replace(id, element) {
         let main = document.getElementById(id);
         let content = main.firstElementChild;
-        if(content)
+        if (content)
             content.remove();
-        if(element)
+        if (element)
             main.append(element);
     }
 
@@ -100,7 +113,7 @@ const presenter = (function () {
 
         // Wird vom Router aufgerufen, wenn eine Blog-Übersicht angezeigt werden soll
         showBlogOverview(bid) {
-           console.log(`Aufruf von presenter.showBlogOverview(${blogId})`); 
+            console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
         }
     };
 })();

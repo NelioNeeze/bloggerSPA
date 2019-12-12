@@ -69,6 +69,7 @@
             $('#auth-status').html('Abgemeldet bei Google'); 
             console.log("---------setSigninStatus: Abgemeldet---------");
             model.setLoggedIn(false);
+            document.getElementById("greeting").innerHTML = "";
             router.navigateToPage('/'); 
         }
     }
