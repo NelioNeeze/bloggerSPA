@@ -15,13 +15,21 @@ const presenter = (function () {
     // Initialisiert die allgemeinen Teile der Seite
     function initPage() {
         console.log("Presenter: Aufruf von initPage()");
-        
+
+
         // Hier werden zunächst nur zu Testzwecken Daten vom Model abgerufen und auf der Konsole ausgegeben 
          
         // Nutzer abfragen und Anzeigenamen als owner setzen
         model.getSelf((result) => {
             owner = result.displayName;
             console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
+
+            let header = document.getElementById("header").cloneNode(true);
+            header.removeAttribute(id);
+
+            console.log("H4?");
+            console.log(header.firstChild.nodeType);
+
         });
 
         model.getAllBlogs((blogs) => {
@@ -40,9 +48,9 @@ const presenter = (function () {
                 for (let p of posts) {
                     console.log(p);
                 }
-                postId = posts[2].postid;
+                postId = posts[0].postid;
                 model.getAllCommentsOfPost(blogId, postId, (comments) => {
-                    console.log("--------------- Alle Comments des zweiten Post --------------- ");
+                    console.log("--------------- Alle Comments des ersten Post --------------- ");
                     if (!comments)
                         return;
                     for (let c of comments) {
@@ -69,6 +77,7 @@ const presenter = (function () {
         owner = undefined;
     }
 
+    //Ersetzt ein Element durch ein anderes
     function replace(id, element){
         let main = document.getElementById(id);
         let content = main.firstElementChild;
@@ -77,7 +86,6 @@ const presenter = (function () {
         if(element)
             main.append(element);
     }
-
 
     //Oeffentliche Methoden
     return {

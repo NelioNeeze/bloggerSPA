@@ -113,8 +113,10 @@ const model = (function () {
             // Execute the API request.
             request.execute((result) => {
                 var blogs = [];
-                for (let b of result.items){
-                    blogs.push(new Blog(b));
+                if(result) {
+                    for (let b of result.items) {
+                        blogs.push(new Blog(b));
+                    }
                 }
                 callback(blogs);
 
@@ -143,13 +145,13 @@ const model = (function () {
 
             request.execute((result) => {
                 var posts = [];
-                for (let p of result.items){
-                    posts.push(new Post(p));
+                if (result) {
+                    for (let p of result.items) {
+                        posts.push(new Post(p));
+                    }
                 }
                 callback(posts);
-
-                //callback(result.items);
-            });
+                });
         },
 
         // Liefert den Post mit der Post-Id pid im Blog mit der Blog-Id bid
@@ -180,8 +182,6 @@ const model = (function () {
                     }
                 }
                 callback(comments);
-
-                //callback(result.items);
             });
         },
 
