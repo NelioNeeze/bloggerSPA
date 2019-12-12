@@ -25,11 +25,9 @@ const presenter = (function () {
         });
 
         let header = document.getElementById("header").cloneNode(true);
-        console.log("Cloned element: " + header.nodeName + "\nID: " + header.id);
         header.removeAttribute("id");
 
-
-        console.log("Type: " + header.firstChild.nodeName);
+        console.log(header.childNodes);
 
         model.getAllBlogs((blogs) => {
             console.log("--------------- Alle Blogs --------------- ");
