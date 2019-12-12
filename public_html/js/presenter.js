@@ -22,12 +22,11 @@ const presenter = (function () {
         model.getSelf((result) => {
             owner = result.displayName;
             console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
+            document.getElementById("greeting").innerHTML = "Greetings, " + owner;
         });
 
-        let header = document.getElementById("header").cloneNode(true);
-        header.removeAttribute("id");
-
-        console.log(header.childNodes);
+        let nav = document.getElementById("navigation");
+        let info = document.getElementById("bloginfo");
 
         model.getAllBlogs((blogs) => {
             console.log("--------------- Alle Blogs --------------- ");

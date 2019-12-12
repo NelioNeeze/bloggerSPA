@@ -24,7 +24,15 @@ and open the template in the editor.
 
     <body>
 	<header>
+        <p id="greeting"></p>
         <button id="sign-in-or-out-button">Anmelden</button>
+
+        <nav>
+            <img src="./img/menu.png" alt="Menu" width="24">
+        </nav>
+
+        <!--- Bloginfo --->
+        <div></div>
 	</header>
 		
 	<main>
@@ -36,40 +44,26 @@ and open the template in the editor.
 		Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
             </p>
 	</footer>
-	
-        
-        
         
         <div id="templates" hidden>
-                    
-            <!-- Header -->
-            <div id="header">
-                    <!-- Header Begrüßung / An-/Abmeldung-->
-                    <div>
-                        <h4>%greeting</h4>
-                        <button id="sign-in-or-out-button" type="button">%logging</button>
-                    </div>
-			
-                    <!-- Header Navigation-->
-                    <nav>
-                        <img src="./img/menu.png" alt="Menu" width="24">
-                        <ul>
-                            <li>
-                                <p>%name</p>
-                                <p>%comments</p>
-                            </li>
 
-                        </ul>
-                    </nav>
-			
-                    <!--- Header Bloginformationen --->
-                    <div>
-                        <h2>%blogname</h2>
-                        <p>%postcount</p>
-                        <p>Erstellt am: %shortCreateDate</p>
-                        <p>Bearbeitet am: %shortEditDate</p>
-                        <button type="button">Google Blogansicht</button>
-                    </div>
+            <div id="navigation">
+                <ul>
+                    <li>
+                        <p>%name</p>
+                        <p>%comments</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="bloginfo">
+                <div>
+                    <h2>%blogname</h2>
+                    <p>%postcount</p>
+                    <p>Erstellt am: %shortCreateDate</p>
+                    <p>Bearbeitet am: %shortEditDate</p>
+                    <button type="button">Google Blogansicht</button>
+                </div>
             </div>
                 
             <!-- Blogübersicht -->
