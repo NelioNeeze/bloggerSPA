@@ -32,14 +32,21 @@ const presenter = (function () {
             let current = currentBlog.render(blogs);
             replace("currentBlog", current);
 
+
+
             blogId = blogs[0].blogid;
             model.getAllPostsOfBlog(blogId, (posts) => {
                 console.log("--------------- Alle Posts des ersten Blogs --------------- ");
                 if (!posts)
                     return;
-                for (let p of posts) {
-                    console.log(p);
-                }
+                let blogPosts = bloguebersicht.render(posts);
+                replace("content", blogPosts);
+
+
+
+
+
+
                 postId = posts[0].postid;
                 model.getAllCommentsOfPost(blogId, postId, (comments) => {
                     console.log("--------------- Alle Comments des ersten Post --------------- ");
@@ -71,6 +78,10 @@ const presenter = (function () {
         blogId = -1;
         postId = -1;
         owner = undefined;
+
+        document.getElementById("greeting").innerHTML = "";
+        document.getElementById("navmenu").innerHTML = "";
+        document.getElementById("currentBlog").innerHTML = "";
     }
 
     //Ersetzt ein Element durch ein anderes

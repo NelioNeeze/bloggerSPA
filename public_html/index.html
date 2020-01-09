@@ -30,23 +30,23 @@ and open the template in the editor.
         <img src="./img/menu.png" alt="Menu" width="24">
 
         <nav id="navmenu">
-
         </nav>
 
         <div id="currentBlog">
-
         </div>
 	</header>
-		
+	<hr>
 	<main>
-					
+		<div id="content">
+
+        </div>
 	</main>
-		
+	<hr>
 	<footer>
-        <hr>
-            <p>
+
+        <p>
 		Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
-            </p>
+        </p>
 	</footer>
         
         <div id="templates" hidden>
@@ -79,10 +79,10 @@ and open the template in the editor.
 				
                     <article>
                             <header>
-                                 <h3>%postname</h3>
+                                 <h3>%title</h3>
                                  <h5><p>Erstellt am %shortCreateDate</p>
                                      <p>Bearbeitet am %shortEditDate</p>
-                                     <p>%comments Kommentare</p></h5>
+                                     <p>%comment Kommentare</p></h5>
                             </header>
                           
                             <footer>
@@ -110,22 +110,22 @@ and open the template in the editor.
                                                 
                             <nav>
                                  <button type="button">Bearbeiten</button>
-				<button type="button">Löschen</button>
+                                 <button type="button">Löschen</button>
                             </nav>
                     </header>
                         
                     <section>
-                            
+                            %content
                     </section>
                 </article>
                 
                 <article>
                     <header>
-                            <p>Kommentar von %author am %longCreateDate
+                        <p>Kommentar von %author am %longCreateDate</p>
                     </header>
 			
                     <section>
-                            
+                            %content
                     </section>
                          
                     <footer>	

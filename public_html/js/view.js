@@ -41,23 +41,42 @@ const bloguebersicht = {
         let page = document.getElementById("bloguebersicht").cloneNode(true);
         page.removeAttribute("id");
         let post = page.querySelector("article");
+        page.lastElementChild.remove();
 
-
-        if (!posts)
+        if (!allPosts)
             return;
         for(let p of allPosts){
             let temp = post.cloneNode(true);
             setDataInfo(temp, p);
-
-            return page;
+            page.append(temp);
         }
+        return page;
     }
 }
 
 const detailansicht = {
-    render(data){
+    render(currentPost){
         let page = document.getElementById("detailansicht").cloneNode(true);
         page.removeAttribute("id");
+
+        let post = page.firstElementChild;
+        setDataInfo(post, currentPost);
+
+        let comment = page.lastElementChild;
+        page.lastElementChild.remove();
+
+        model.getAllCommentsOfPost(currentPost.blog.id, currentPost.id, (comments) => {
+            if(!comments){
+                return;
+            }
+            for(let c of comments){
+                let temp = comment.cloneNode(true);
+                setDataInfo(temp, c);
+                page.append(temp);
+            }
+        })
+
+        return page;
     }
 }
 
