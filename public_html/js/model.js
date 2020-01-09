@@ -20,7 +20,7 @@ const model = (function () {
         var date1 = new Date(date);
         //Kurzes Format
         if(!long){
-            let newDate = date1.getDate() + "." + date1.getMonth() + "." + date1.getFullYear();
+            let newDate = date1.getDate() + "." + (date1.getMonth() + 1) + "." + date1.getFullYear();
             return newDate;
         }
         //Langes Format

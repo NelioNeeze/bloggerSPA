@@ -56,7 +56,8 @@ const bloguebersicht = {
 
 const detailansicht = {
     render(data){
-
+        let page = document.getElementById("detailansicht").cloneNode(true);
+        page.removeAttribute("id");
     }
 }
 
