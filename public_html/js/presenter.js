@@ -25,25 +25,12 @@ const presenter = (function () {
             document.getElementById("greeting").innerHTML = "Greetings, " + owner;
         });
 
-        let nav = document.getElementById("navigation").cloneNode(true);
-        nav.removeAttribute("id");
-        let ul = nav.firstElementChild.cloneNode(true);
-        let li = ul.firstElementChild.cloneNode(true);
-
-        //Remove LI in UL
-        nav.firstElementChild.firstElementChild.remove();
-
-
         model.getAllBlogs((blogs) => {
-            if (!blogs)
-                return;
-            for (let b of blogs) {
-                console.log(b);
-                let litemp = li.cloneNode(true);
-                setDataInfo(litemp, b);
-                nav.firstElementChild.append(litemp);
-            }
+            let nav = navigation.render(blogs);
             replace("navmenu", nav.firstElementChild);
+
+            let current = currentBlog.render(blogs);
+            replace("currentBlog", current);
 
             blogId = blogs[0].blogid;
             model.getAllPostsOfBlog(blogId, (posts) => {

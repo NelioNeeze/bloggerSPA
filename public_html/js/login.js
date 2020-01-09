@@ -70,6 +70,8 @@
             console.log("---------setSigninStatus: Abgemeldet---------");
             model.setLoggedIn(false);
             document.getElementById("greeting").innerHTML = "";
+            document.getElementById("navmenu").innerHTML = "";
+            document.getElementById("currentBlog").innerHTML = "";
             router.navigateToPage('/'); 
         }
     }

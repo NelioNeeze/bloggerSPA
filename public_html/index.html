@@ -33,8 +33,9 @@ and open the template in the editor.
 
         </nav>
 
-        <!--- Bloginfo --->
-        <div></div>
+        <div id="currentBlog">
+
+        </div>
 	</header>
 		
 	<main>
@@ -42,6 +43,7 @@ and open the template in the editor.
 	</main>
 		
 	<footer>
+        <hr>
             <p>
 		Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
             </p>
@@ -52,8 +54,7 @@ and open the template in the editor.
             <div id="navigation">
                 <ul>
                     <li>
-                        <p>%blogname</p>
-                        <p>%postcount</p>
+                        <p>%blogname (%postcount Beiträge)</p>
                     </li>
                 </ul>
             </div>
@@ -61,10 +62,12 @@ and open the template in the editor.
             <div id="bloginfo">
                 <div>
                     <h2>%blogname</h2>
-                    <p>%postcount</p>
+                    <p>Beiträge: %postcount</p>
                     <p>Erstellt am: %shortCreateDate</p>
                     <p>Bearbeitet am: %shortEditDate</p>
-                    <button type="button">Google Blogansicht</button>
+                    <a href="">
+                        <button type="button">Google Blogansicht</button>
+                    </a>
                 </div>
             </div>
                 
