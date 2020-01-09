@@ -42,11 +42,6 @@ const presenter = (function () {
                 let blogPosts = bloguebersicht.render(posts);
                 replace("content", blogPosts);
 
-
-
-
-
-
                 postId = posts[0].postid;
                 model.getAllCommentsOfPost(blogId, postId, (comments) => {
                     console.log("--------------- Alle Comments des ersten Post --------------- ");
@@ -112,6 +107,15 @@ const presenter = (function () {
         // Wird vom Router aufgerufen, wenn eine Blog-Übersicht angezeigt werden soll
         showBlogOverview(bid) {
             console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
+
+            model.getAllPostsOfBlog(bid, (posts) => {
+                if (!posts)
+                    return;
+                let blogPosts = bloguebersicht.render(posts);
+                replace("content", blogPosts);
+            });
         }
+
+
     };
 })();
