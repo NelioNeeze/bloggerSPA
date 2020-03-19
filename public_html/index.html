@@ -23,38 +23,37 @@ and open the template in the editor.
     </head>
 
     <body>
-	<header>
-        <p id="greeting"></p>
-        <button id="sign-in-or-out-button">Anmelden</button>
-        <br>
-        <img src="./img/menu.png" alt="Menu" width="24">
+	    <header>
+            <p id="greeting"></p>
+            <button id="sign-in-or-out-button">Anmelden</button>
+            <br>
+            <img src="./img/menu.png" alt="Menu" width="24">
+            <nav id="navmenu">
+            </nav>
+            <div id="currentBlog">
+            </div>
+	    </header>
+	    <hr>
+	    <main>
+		    <div id="content">
 
-        <nav id="navmenu">
-        </nav>
-
-        <div id="currentBlog">
-        </div>
-	</header>
-	<hr>
-	<main>
-		<div id="content">
-
-        </div>
-	</main>
-	<hr>
-	<footer>
-
-        <p>
-		Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
-        </p>
-	</footer>
+            </div>
+	    </main>
+	    <hr>
+	    <footer>
+            <p>
+		    Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
+            </p>
+	    </footer>
         
         <div id="templates" hidden>
 
             <div id="navigation">
                 <ul>
                     <li>
-                        <p>%blogname (%postcount Beiträge)</p>
+                        <a data-path="">
+                            <p>%blogname (%postcount Beiträge)</p>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -74,7 +73,7 @@ and open the template in the editor.
             <!-- Blogübersicht -->
             <div id="bloguebersicht">
                     <nav>
-                        <button type="button">Neuer Post</button>
+                        <button type="button" data-action="addNewPost">Neuer Post</button>
                     </nav>
 				
                     <article>
@@ -88,9 +87,9 @@ and open the template in the editor.
 
                             <footer>
                                 <nav>
-                                     <button type="button">Ansehen</button>
-                                     <button type="button">Bearbeiten</button>
-                                     <button type="button">Löschen</button>
+                                     <button type="button" data-path="">Ansehen</button>
+                                     <button type="button" data-action="updatePost">Bearbeiten</button>
+                                     <button type="button" data-action="deletePost">Löschen</button>
                                 </nav>
                             </footer>
                     </article>	
@@ -110,8 +109,8 @@ and open the template in the editor.
                                 <p>%comments Kommentare</p></h5>
                                                 
                             <nav>
-                                 <button type="button">Bearbeiten</button>
-                                 <button type="button">Löschen</button>
+                                 <button type="button" data-action="updatePost">Bearbeiten</button>
+                                 <button type="button" data-action="deletePost">Löschen</button>
                             </nav>
                     </header>
                         
@@ -130,7 +129,7 @@ and open the template in the editor.
                     </section>
                          
                     <footer>	
-                            <button type="button">Löschen</button>
+                            <button type="button" data-action="deleteComment">Löschen</button>
                     </footer>
                 </article>
             </div>

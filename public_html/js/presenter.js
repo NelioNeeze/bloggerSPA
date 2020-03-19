@@ -13,17 +13,78 @@ const presenter = (function () {
     let owner = undefined;
 
     /*
+        Zentraler Eventhandler
+     */
+    function handleClicks(event){
+        let source = null;
+
+        switch(event.target.tagName){
+            case "BUTTON":
+                source = event.target;
+                break;
+            case "A":
+                router.handleNavigationEvent(event);
+                break;
+            default:
+
+                break;
+        }
+        if(source){
+            let action = source.dataset.action;
+            if(action)
+                presenter[action](source.id);
+            let path = source.dataset.path;
+            if (path)
+                router.navigateToPage(path);
+        }
+    }
+
+    /*
+        Erstellen eines neuen Posts
+     */
+    function addNewPost(){
+
+    }
+
+    /*
+        Bearbeiten eines Posts
+     */
+    function updatePost(){
+
+    }
+
+    /*
+        Löschen eines Posts
+     */
+    function deletePost(){
+
+    }
+
+    /*
+        Löschen eines Kommentars
+     */
+    function deleteComment(){
+
+    }
+
+    /*
         Initialisiert die allgemeinen Teile der Seite
      */
     function initPage() {
         console.log("Presenter: Aufruf von initPage()");
+        document.addEventListener("click", handleClicks);
 
         model.getAllBlogs((blogs) => {
-            let nav = navigation.render(blogs);
-            replace("navmenu", nav.firstElementChild);
+            if(blogs){
+                console.log("Presenter: Füllen der Navigation");
+                let nav = navigation.render(blogs);
+                replace("navmenu", nav.firstElementChild);
 
-            let current = currentBlog.render(blogs[0]);
-            replace("currentBlog", current);
+                console.log("Presenter: Füllen des momentanen Blogs (Header)");
+                let current = currentBlog.render(blogs[0]);
+                replace("currentBlog", current);
+
+            }
         });
 
         model.getSelf((result) => {
@@ -76,7 +137,7 @@ const presenter = (function () {
             Wird vom Router aufgerufen, wenn die Startseite betreten wird
          */
         showStartPage() {
-            console.log("Aufruf von presenter.showStartPage()");
+            console.log("Presenter: Aufruf von showStartPage()");
             // Wenn vorher noch nichts angezeigt wurde, d.h. beim Einloggen
             if (model.isLoggedIn()) { // Wenn der Nutzer eingeloggt ist
                 initPage();
@@ -91,7 +152,7 @@ const presenter = (function () {
             Wird vom Router aufgerufen, wenn eine Blog-Übersicht angezeigt werden soll
          */
         showBlogOverview(bid) {
-            console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
+            console.log(`Presenter: Aufruf von showBlogOverview(${bid})`);
 
             //Teste ob Blog mindestens einen Post besitzt
             model.getBlog(bid, (current) => {
@@ -104,7 +165,8 @@ const presenter = (function () {
                     });
                 }
                 else{
-                    bloguebersicht.render(false);
+                    //Wenn nein, übergebe null
+                    let blogOverview = bloguebersicht.render(null);
                 }
             })
         },
@@ -113,23 +175,13 @@ const presenter = (function () {
          Wird vom Router augerufen, wenn eine Blog-Detailansicht angezeigt werden soll
          */
         showDetailView(bid, pid) {
-            console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
+            console.log(`Presenter: Aufruf von showDetailView(${bid}, ${pid})`);
 
-            //Teste, ob Blog mindestens einen Post besitzt
-            model.getBlog(bid, (current) =>{
-                if(current.postcount > 0){
-                    //Wenn ja, nehme alle Blogposts
-                    model.getPost(bid, pid, (post) => {
-                        if(post.comments > 0){
-                            //Und alle Kommentare
-                            model.getAllCommentsOfPost(bid, pid, (comments) => {
-                                //Und übergebe sie an die View
-                                let detailView = detailansicht.render(post, comments);
-                                replace("content", detailView);
-                            })
-                        }
-                    })
-                }
+            model.getPost(bid, pid, (post) => {
+                model.getAllCommentsOfPost(bid, pid, (comments) => {
+                    let detailView = detailansicht.render(post, comments);
+                    replace("content", detailView);
+                })
             })
         }
     }

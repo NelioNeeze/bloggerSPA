@@ -30,7 +30,7 @@ const navigation = {
  */
 const currentBlog = {
     render(currentBlog){
-        console.log("View: Füllen des momentanen Blogs ");
+        console.log("View: Füllen des momentanen Blogs (Header)");
         let page = document.getElementById("bloginfo").cloneNode(true);
         page.removeAttribute("id");
 
@@ -55,12 +55,15 @@ const bloguebersicht = {
         let post = page.querySelector("article");
         page.lastElementChild.remove();
 
-        if (!allPosts)
-            return;
-        for(let p of allPosts){
-            let temp = post.cloneNode(true);
-            setDataInfo(temp, p);
-            page.append(temp);
+        if(allPosts){
+            for(let p of allPosts){
+                let temp = post.cloneNode(true);
+                setDataInfo(temp, p);
+                page.append(temp);
+            }
+        }
+        else{
+            //TODO Nur Button für Post erstellen anzeigen lassen
         }
 
         return page;
@@ -71,29 +74,27 @@ const bloguebersicht = {
     Baut die Detailansicht aus einem Post und allen dazugehörigen Kommentaren
  */
 const detailansicht = {
-    render(currentPost, allCommentsOfPost){
+    render(currentPost, comments){
         console.log("View: Füllen der Detailansicht");
 
         let page = document.getElementById("detailansicht").cloneNode(true);
         page.removeAttribute("id");
-
         let post = page.firstElementChild;
         page.firstElementChild.remove();
         setDataInfo(post, currentPost);
 
         let comment = page.firstElementChild;
         page.firstElementChild.remove();
-
         page.append(post);
 
+        if(comments.length > 0){
+            for(let c of comments){
+                let temp = comment.cloneNode(true);
+                setDataInfo(temp, c);
 
-        for(let c of allCommentsOfPost){
-            let temp = comment.cloneNode(true);
-            setDataInfo(temp, c);
-
-            page.append(temp);
+                page.append(temp);
+            }
         }
-
 
         return page;
     }

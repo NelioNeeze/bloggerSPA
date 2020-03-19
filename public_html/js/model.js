@@ -36,7 +36,7 @@ const model = (function () {
         Konstruktoren für Daten-Objekte
      */
     function Blog(blog){
-        console.log(`Erstellen eines Blogobjekts über den Konstruktor: ${blog.name}`);
+        console.log(`Model: Erstellen eines Blogobjekts über den Konstruktor: ${blog.name}`);
 
         this.blogid = blog.id;
         this.blogname = blog.name;
@@ -51,7 +51,7 @@ const model = (function () {
     }
 
     function Post(post){
-        console.log(`Erstellen eines Postobjekts über den Konstruktor: ${post.title}`);
+        console.log(`Model: Erstellen eines Postobjekts über den Konstruktor: ${post.title}`);
 
         this.postid = post.id;
         this.blogid = post.blog.id;
@@ -67,7 +67,7 @@ const model = (function () {
     }
 
     function Comment(comment){
-        console.log(`Erstellen eines Commentobjekts über den Konstruktor.: ${comment.id}`);
+        console.log(`Model: Erstellen eines Commentobjekts über den Konstruktor.: ${comment.id} by ${comment.author.displayName}`);
 
         this.commentid = comment.id;
         this.blogid = comment.blog.id;
@@ -102,6 +102,7 @@ const model = (function () {
             Liefert den angemeldeten Nutzer mit allen Infos
          */
         getSelf(callback) {
+            console.log("Model: Aufruf von getSelf()");
             var request = gapi.client.request({
                 'method': 'GET',
                 'path': 'blogger/v3/users/self'
@@ -116,17 +117,19 @@ const model = (function () {
             Liefert alle Blogs des angemeldeten Nutzers
          */
         getAllBlogs(callback) {
+            console.log("Model: Aufruf von getAllBlogs()");
             var request = gapi.client.request({
                 'method': 'GET',
                 'path': pathGetBlogs
             });
             // Execute the API request.
             request.execute((result) => {
-                var blogs = [];
-                for (let b of result.items) {
-                    blogs.push(new Blog(b));
+                let blogs = [];
+                if(result.items){
+                    for (let b of result.items) {
+                        blogs.push(new Blog(b));
+                    }
                 }
-
                 callback(blogs);
             });
         },
@@ -135,13 +138,16 @@ const model = (function () {
             Liefert den Blog mit der Blog-Id bid
          */
         getBlog(bid, callback) {
+            console.log(`Model: Aufruf von getBlog(${bid})`);
             var request = gapi.client.request({
                 'method': 'GET',
                 'path': pathBlogs + "/" + bid
             });
             // Execute the API request.
             request.execute((result) => {
-                callback(new Blog(result));
+                if(result)
+                    callback(new Blog(result));
+                else callback();
             });
         },
 
@@ -150,33 +156,36 @@ const model = (function () {
             Liefert alle Posts zu der  Blog-Id bid
          */
         getAllPostsOfBlog(bid, callback) {
+            console.log(`Model: Aufruf von getAllPostsOfBlog(${bid})`);
             var request = gapi.client.request({
                 'method': 'GET',
                 'path': pathBlogs + "/" + bid + '/posts'
             });
             // Execute the API request.
             request.execute((result) => {
-                var posts = [];
-                for (let p of result.items) {
-                    posts.push(new Post(p));
+                let posts = [];
+                if(result.items){
+                    for (let p of result.items) {
+                        posts.push(new Post(p));
+                    }
                 }
-
-
                 callback(posts);
-                });
+            });
         },
 
         /*
             Liefert den Post mit der Post-Id pid im Blog mit der Blog-Id bid
          */
         getPost(bid, pid, callback) {
+            console.log(`Model: Aufruf von getPost(${bid}, ${pid})`);
             var request = gapi.client.request({
                 'method': 'GET',
                 'path': pathBlogs + "/" + bid + '/posts/' + pid
             });
             // Execute the API request.
             request.execute((result) => {
-                callback(new Post(result));
+                if(result)
+                    callback(new Post(result));
             });
         },
 
@@ -185,17 +194,20 @@ const model = (function () {
             im Blog mit der Blog-Id bid
          */
         getAllCommentsOfPost(bid, pid, callback) {
+            console.log(`Model: Aufruf von getAllCommentsOfPost(${bid}, ${pid})`);
             var request = gapi.client.request({
                 'method': 'GET',
                 'path': pathBlogs + "/" + bid + '/posts/' + pid + "/comments"
             });
             // Execute the API request.
             request.execute((result) => {
-                var comments = [];
-                for (let c of result.items) {
-                    comments.push(new Comment(c));
+                let comments = [];
+                if(result.items){
+                    for (let c of result.items) {
+                        comments.push(new Comment(c));
+                    }
+                    console.log(`Model: ${comments.length} Kommentare gefunden.`)
                 }
-
                 callback(comments);
             });
         },
@@ -206,6 +218,7 @@ const model = (function () {
             Callback wird ohne result aufgerufen
         */
         deleteComment(bid, pid, cid, callback) {
+            console.log(`Model: Aufruf von deleteComment(${bid}, ${pid}, ${cid})`);
             var path = pathBlogs + "/" + bid + '/posts/' + pid + "/comments/" + cid;
             console.log(path);
             var request = gapi.client.request({
@@ -221,6 +234,7 @@ const model = (function () {
             mit title und content hinzu, Callback wird mit neuem Post aufgerufen
          */
         addNewPost(bid, title, content, callback) {
+            console.log(`Model: Aufruf von addNewPost(${bid}, ${title}, ${content})`);
             var body = {
                 kind: "blogger#post",
                 title: title,
@@ -244,6 +258,7 @@ const model = (function () {
             mit der Post-Id pid im Blog mit der Blog-Id bid
          */
         updatePost(bid, pid, title, content, callback) {
+            console.log(`Model: Aufruf von updatePost(${bid}, ${pid}, ${title}, ${content})`);
             var body = {
                 kind: "blogger#post",
                 title: title,
@@ -268,6 +283,7 @@ const model = (function () {
             Callback wird ohne result aufgerufen
          */
         deletePost(bid, pid, callback) {
+            console.log(`Model: Aufruf von deletePost(${bid}, ${pid})`);
             var path = pathBlogs + "/" + bid + '/posts/' + pid;
             console.log(path);
             var request = gapi.client.request({
