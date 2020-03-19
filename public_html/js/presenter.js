@@ -44,7 +44,7 @@ const presenter = (function () {
             model.getAllPostsOfBlog(blogId, (posts) => {
                 if (!posts)
                     return;
-                let postId = posts[1].postid;
+                let postId = posts[0].postid;
                 presenter.showDetailView(blogId, postId)
             });
 

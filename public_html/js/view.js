@@ -66,6 +66,7 @@ const detailansicht = {
 
         let post = page.firstElementChild;
         page.firstElementChild.remove();
+        console.log("Date of Post: " + currentPost.published);
         setDataInfo(post, currentPost);
 
         let comment = page.firstElementChild;
