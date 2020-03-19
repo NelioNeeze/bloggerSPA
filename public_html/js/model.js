@@ -72,7 +72,7 @@ const model = (function () {
         this.commentid = comment.id;
         this.blogid = comment.blog.id;
         this.postid = comment.post.id;
-        this.author = comment.author;
+        this.author = comment.author.displayName;
         this.commentcreate = comment.published;
         this.commentedit = comment.updated;
         this.content = comment.content;
@@ -176,10 +176,10 @@ const model = (function () {
 
             request.execute((result) => {
                 var comments = [];
-                if(result.length > 0){
-                    for (let c of result.items){
-                        comments.push(new Comment(c));
-                    }
+                if(!result)
+                    return;
+                for (let c of result.items){
+                    comments.push(new Comment(c));
                 }
                 callback(comments);
             });

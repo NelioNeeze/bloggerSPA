@@ -24,6 +24,7 @@ const navigation = {
 
 const currentBlog = {
     render(allBlogs){
+        console.log("View: Füllen des momentanen Blogs ");
         let page = document.getElementById("bloginfo").cloneNode(true);
         page.removeAttribute("id");
 
@@ -38,6 +39,8 @@ const currentBlog = {
 
 const bloguebersicht = {
     render(allPosts){
+        console.log("View: Füllen der Blogübersicht");
+
         let page = document.getElementById("bloguebersicht").cloneNode(true);
         page.removeAttribute("id");
         let post = page.querySelector("article");
@@ -56,14 +59,19 @@ const bloguebersicht = {
 
 const detailansicht = {
     render(currentPost){
+        console.log("View: Füllen der Detailansicht");
+
         let page = document.getElementById("detailansicht").cloneNode(true);
         page.removeAttribute("id");
 
         let post = page.firstElementChild;
+        page.firstElementChild.remove();
         setDataInfo(post, currentPost);
 
-        let comment = page.lastElementChild;
-        page.lastElementChild.remove();
+        let comment = page.firstElementChild;
+        page.firstElementChild.remove();
+
+        page.append(post);
 
         model.getAllCommentsOfPost(currentPost.blog.id, currentPost.id, (comments) => {
             if(!comments){

@@ -26,6 +26,8 @@ const presenter = (function () {
         });
 
         model.getAllBlogs((blogs) => {
+            console.log("Presenter: " + blogs.length + " Blogs erhalten");
+
             let nav = navigation.render(blogs);
             replace("navmenu", nav.firstElementChild);
 
@@ -33,25 +35,19 @@ const presenter = (function () {
             replace("currentBlog", current);
 
 
-
+            // Test für Funktion von showBlogOverview
             blogId = blogs[0].blogid;
+            //presenter.showBlogOverview(blogId);
+
+
+            //Test für Funktion von showDetailView
             model.getAllPostsOfBlog(blogId, (posts) => {
-                console.log("--------------- Alle Posts des ersten Blogs --------------- ");
                 if (!posts)
                     return;
-                let blogPosts = bloguebersicht.render(posts);
-                replace("content", blogPosts);
-
-                postId = posts[0].postid;
-                model.getAllCommentsOfPost(blogId, postId, (comments) => {
-                    console.log("--------------- Alle Comments des ersten Post --------------- ");
-                    if (!comments)
-                        return;
-                    for (let c of comments) {
-                        console.log(c);
-                    }
-                });
+                let postId = posts[1].postid;
+                presenter.showDetailView(blogId, postId)
             });
+
         });
 
         //TODO
@@ -109,11 +105,11 @@ const presenter = (function () {
             console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
 
             model.getAllPostsOfBlog(bid, (posts) => {
-                console.log("Posts erhalten: " + posts);
+                console.log("Presenter: " + posts.length + " Posts erhalten.");
                 if (!posts)
                     return;
-                let blogPosts = bloguebersicht.render(posts);
-                replace("content", blogPosts);
+                let blogOverview = bloguebersicht.render(posts);
+                replace("content", blogOverview);
             });
         },
 
@@ -122,17 +118,11 @@ const presenter = (function () {
             console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
 
             model.getPost(bid, pid, (post) => {
-                console.log("Post erhalten: " + post);
+                console.log(`showDeatilView: Post erhalten`);
                 if (!post)
                     return;
-
-                model.getAllCommentsOfPost(bid, pid, (comments) =>{
-                    if(!comments)
-                        return;
-
-                    
-
-                })
+                let detailView = detailansicht.render(post);
+                replace("content", detailView);
             })
 
         }
