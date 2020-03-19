@@ -159,11 +159,10 @@ const model = (function () {
 
             request.execute((result) => {
                 var posts = [];
-                if(result.items){
-                    for (let p of result.items) {
-                        posts.push(new Post(p));
-                    }
+                for (let p of result.items) {
+                    posts.push(new Post(p));
                 }
+
 
                 callback(posts);
                 });
