@@ -36,7 +36,7 @@ const model = (function () {
 
     // Konstruktoren für Daten-Objekte
     function Blog(blog){
-        console.log("Erstellen eines Blogobjekts über den Konstruktor..");
+        console.log(`Erstellen eines Blogobjekts über den Konstruktor: ${blog.name}`);
 
         this.blogid = blog.id;
         this.blogname = blog.name;
@@ -51,7 +51,7 @@ const model = (function () {
     }
 
     function Post(post){
-        console.log("Erstellen eines Postobjekts über den Konstruktor..")
+        console.log(`Erstellen eines Postobjekts über den Konstruktor: ${post.title}`);
 
         this.postid = post.id;
         this.blogid = post.blog.id;
@@ -67,7 +67,7 @@ const model = (function () {
     }
 
     function Comment(comment){
-        console.log("Erstellen eines Commentobjekts über den Konstruktor..")
+        console.log(`Erstellen eines Commentobjekts über den Konstruktor.: ${comment.id}`);
 
         this.commentid = comment.id;
         this.blogid = comment.blog.id;
@@ -113,7 +113,7 @@ const model = (function () {
             // Execute the API request.
             request.execute((result) => {
                 var blogs = [];
-                if(result) {
+                if(result.items.length > 0) {
                     for (let b of result.items) {
                         blogs.push(new Blog(b));
                     }
@@ -143,10 +143,9 @@ const model = (function () {
 
             request.execute((result) => {
                 var posts = [];
-                if (result) {
+                if (result.items.length > 0) {
                     for (let p of result.items) {
-                        let post = new Post(p);
-                        posts.push(new Post(post));
+                        posts.push(new Post(p));
                     }
                 }
                 callback(posts);
@@ -175,10 +174,10 @@ const model = (function () {
 
             request.execute((result) => {
                 var comments = [];
-                if(!result)
-                    return;
-                for (let c of result.items){
-                    comments.push(new Comment(c));
+                if(result.items.length > 0) {
+                    for (let c of result.items) {
+                        comments.push(new Comment(c));
+                    }
                 }
                 callback(comments);
             });
