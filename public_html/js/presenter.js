@@ -22,7 +22,7 @@ const presenter = (function () {
             let nav = navigation.render(blogs);
             replace("navmenu", nav.firstElementChild);
 
-            let current = currentBlog.render(blogs);
+            let current = currentBlog.render(blogs[0]);
             replace("currentBlog", current);
         });
 
@@ -102,6 +102,9 @@ const presenter = (function () {
                         let blogOverview = bloguebersicht.render(posts);
                         replace("content", blogOverview);
                     });
+                }
+                else{
+                    bloguebersicht.render(false);
                 }
             })
         },

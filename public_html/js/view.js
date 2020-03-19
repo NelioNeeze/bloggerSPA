@@ -36,8 +36,8 @@ const currentBlog = {
 
         let div = page.querySelector("div");
         let a = div.querySelector("a");
-        a.setAttribute("href", allBlogs[0].url);
-        setDataInfo(div, allBlogs[0]);
+        a.setAttribute("href", currentBlog.url);
+        setDataInfo(div, currentBlog);
 
         return page;
     }
@@ -62,6 +62,7 @@ const bloguebersicht = {
             setDataInfo(temp, p);
             page.append(temp);
         }
+
         return page;
     }
 }
