@@ -26,7 +26,6 @@ const presenter = (function () {
         });
 
         model.getAllBlogs((blogs) => {
-            console.log("Presenter: " + blogs.length + " Blogs erhalten");
 
             let nav = navigation.render(blogs);
             replace("navmenu", nav.firstElementChild);
@@ -44,7 +43,7 @@ const presenter = (function () {
             model.getAllPostsOfBlog(blogId, (posts) => {
                 if (!posts)
                     return;
-                let postId = posts[0].postid;
+                let postId = posts[1].postid;
                 presenter.showDetailView(blogId, postId)
             });
 
@@ -105,7 +104,6 @@ const presenter = (function () {
             console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
 
             model.getAllPostsOfBlog(bid, (posts) => {
-                console.log("Presenter: " + posts.length + " Posts erhalten.");
                 if (!posts)
                     return;
                 let blogOverview = bloguebersicht.render(posts);
@@ -118,7 +116,6 @@ const presenter = (function () {
             console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
 
             model.getPost(bid, pid, (post) => {
-                console.log(`showDeatilView: Post erhalten`);
                 if (!post)
                     return;
                 let detailView = detailansicht.render(post);

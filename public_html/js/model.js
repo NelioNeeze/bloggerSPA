@@ -119,8 +119,6 @@ const model = (function () {
                     }
                 }
                 callback(blogs);
-
-                //callback(result.items);
             });
         },
 
@@ -132,7 +130,7 @@ const model = (function () {
             });
             // Execute the API request.
             request.execute((result) => {
-                callback(result);
+                callback(new Blog(result));
             });
         },
 
@@ -147,7 +145,8 @@ const model = (function () {
                 var posts = [];
                 if (result) {
                     for (let p of result.items) {
-                        posts.push(new Post(p));
+                        let post = new Post(p);
+                        posts.push(new Post(post));
                     }
                 }
                 callback(posts);
@@ -162,7 +161,7 @@ const model = (function () {
             });
 
             request.execute((result) => {
-                callback(result);
+                callback(new Post(result));
             });
         },
 
