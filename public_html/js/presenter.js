@@ -18,7 +18,6 @@ const presenter = (function () {
     function initPage() {
         console.log("Presenter: Aufruf von initPage()");
 
-        // Hier werden zunächst nur zu Testzwecken Daten vom Model abgerufen und auf der Konsole ausgegeben
         model.getAllBlogs((blogs) => {
             let nav = navigation.render(blogs);
             replace("navmenu", nav.firstElementChild);
@@ -27,7 +26,6 @@ const presenter = (function () {
             replace("currentBlog", current);
         });
 
-        // Nutzer abfragen und Anzeigenamen als owner setzen
         model.getSelf((result) => {
             owner = result.displayName;
             console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
