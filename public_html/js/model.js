@@ -154,7 +154,7 @@ const model = (function () {
                 'method': 'GET',
                 'path': pathBlogs + "/" + bid + '/posts'
             });
-
+            // Execute the API request.
             request.execute((result) => {
                 var posts = [];
                 for (let p of result.items) {
@@ -174,7 +174,7 @@ const model = (function () {
                 'method': 'GET',
                 'path': pathBlogs + "/" + bid + '/posts/' + pid
             });
-
+            // Execute the API request.
             request.execute((result) => {
                 callback(new Post(result));
             });
@@ -189,7 +189,7 @@ const model = (function () {
                 'method': 'GET',
                 'path': pathBlogs + "/" + bid + '/posts/' + pid + "/comments"
             });
-
+            // Execute the API request.
             request.execute((result) => {
                 var comments = [];
                 for (let c of result.items) {
@@ -212,7 +212,7 @@ const model = (function () {
                 'method': 'DELETE',
                 'path': path
             });
-
+            // Execute the API request.
             request.execute(callback);
         },
 
@@ -235,7 +235,7 @@ const model = (function () {
                 'path': pathBlogs + "/" + bid + '/posts',
                 'body': body
             });
-
+            // Execute the API request.
             request.execute(callback);
         },
 
@@ -259,7 +259,7 @@ const model = (function () {
                 'path': pathBlogs + "/" + bid + '/posts/' + pid,
                 'body': body
             });
-
+            // Execute the API request.
             request.execute(callback);
         },
 
@@ -274,11 +274,8 @@ const model = (function () {
                 'method': 'DELETE',
                 'path': path
             });
-
+            // Execute the API request.
             request.execute(callback);
         }
     };
 })();
-
-
-
