@@ -1,5 +1,8 @@
 "use strict";
 
+/*
+    Baut die Navigationsleiste
+ */
 const navigation = {
     render(allBlogs) {
         console.log("View: Füllen der Navigation");
@@ -22,8 +25,11 @@ const navigation = {
     }
 }
 
+/*
+    Baut die Anzeige des momentanen Blogs
+ */
 const currentBlog = {
-    render(allBlogs){
+    render(currentBlog){
         console.log("View: Füllen des momentanen Blogs ");
         let page = document.getElementById("bloginfo").cloneNode(true);
         page.removeAttribute("id");
@@ -37,6 +43,9 @@ const currentBlog = {
     }
 }
 
+/*
+    Baut die Blogübersicht aus allen zu einem Blog gehörenden Posts
+ */
 const bloguebersicht = {
     render(allPosts){
         console.log("View: Füllen der Blogübersicht");
@@ -57,6 +66,9 @@ const bloguebersicht = {
     }
 }
 
+/*
+    Baut die Detailansicht aus einem Post und allen dazugehörigen Kommentaren
+ */
 const detailansicht = {
     render(currentPost, allCommentsOfPost){
         console.log("View: Füllen der Detailansicht");
@@ -86,6 +98,9 @@ const detailansicht = {
     }
 }
 
+/*
+    Ersetzt ein Element element mit dem Objekt object
+ */
 function setDataInfo(element, object){
     let cont = element.innerHTML;
     for (let key in object){

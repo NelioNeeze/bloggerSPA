@@ -7,23 +7,23 @@
 const model = (function () {
     // Private Variablen
     let loggedIn = false;
-
     let pathGetBlogs = 'blogger/v3/users/self/blogs';
     let pathBlogs = 'blogger/v3/blogs';
 
     // Private Funktionen
 
-    // Formatiert den Datum-String in date in zwei mögliche Datum-Strings:
-    // long = false: 24.10.2018
-    // long = true: Mittwoch, 24. Oktober 2018, 12:21
+    /*  Formatiert den Datum-String in date in zwei mögliche Datum-Strings:
+        long = false: 24.10.2018
+        long = true: Mittwoch, 24. Oktober 2018, 12:21
+     */
     function formatDate(date, long) {
         var date1 = new Date(date);
-        //Kurzes Format
+        // Kurzes Format
         if(!long){
             let newDate = date1.getDate() + "." + (date1.getMonth() + 1) + "." + date1.getFullYear();
             return newDate;
         }
-        //Langes Format
+        // Langes Format
         else{
             let weekdays =
                 ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
@@ -34,7 +34,9 @@ const model = (function () {
         }
     }
 
-    // Konstruktoren für Daten-Objekte
+    /*
+        Konstruktoren für Daten-Objekte
+     */
     function Blog(blog){
         console.log(`Erstellen eines Blogobjekts über den Konstruktor: ${blog.name}`);
 
@@ -84,15 +86,23 @@ const model = (function () {
 
     // Oeffentliche Methoden
     return {
-        // Setter für loggedIn
+        /*
+            Setter für loggedIn
+         */
         setLoggedIn(b){
             loggedIn = b;
         },
-        // Getter für loggedIn
+
+        /*
+            Getter für loggedIn
+         */
         isLoggedIn(){
             return loggedIn;
         },
-        // Liefert den angemeldeten Nutzer mit allen Infos
+
+        /*
+            Liefert den angemeldeten Nutzer mit allen Infos
+         */
         getSelf(callback) {
             var request = gapi.client.request({
                 'method': 'GET',
@@ -104,7 +114,9 @@ const model = (function () {
             });
         },
 
-        // Liefert alle Blogs des angemeldeten Nutzers
+        /*
+            Liefert alle Blogs des angemeldeten Nutzers
+         */
         getAllBlogs(callback) {
             var request = gapi.client.request({
                 'method': 'GET',
@@ -112,7 +124,6 @@ const model = (function () {
             });
             // Execute the API request.
             request.execute((result) => {
-
                 var blogs = [];
                 for (let b of result.items) {
                     blogs.push(new Blog(b));
@@ -122,7 +133,9 @@ const model = (function () {
             });
         },
 
-        // Liefert den Blog mit der Blog-Id bid
+        /*
+            Liefert den Blog mit der Blog-Id bid
+         */
         getBlog(bid, callback) {
             var request = gapi.client.request({
                 'method': 'GET',
@@ -134,7 +147,10 @@ const model = (function () {
             });
         },
 
-        // Liefert alle Posts zu der  Blog-Id bid
+
+        /*
+            Liefert alle Posts zu der  Blog-Id bid
+         */
         getAllPostsOfBlog(bid, callback) {
             var request = gapi.client.request({
                 'method': 'GET',
@@ -143,15 +159,19 @@ const model = (function () {
 
             request.execute((result) => {
                 var posts = [];
-                for (let p of result.items) {
-                    posts.push(new Post(p));
+                if(result.items){
+                    for (let p of result.items) {
+                        posts.push(new Post(p));
+                    }
                 }
 
                 callback(posts);
                 });
         },
 
-        // Liefert den Post mit der Post-Id pid im Blog mit der Blog-Id bid
+        /*
+            Liefert den Post mit der Post-Id pid im Blog mit der Blog-Id bid
+         */
         getPost(bid, pid, callback) {
             var request = gapi.client.request({
                 'method': 'GET',
@@ -163,8 +183,10 @@ const model = (function () {
             });
         },
 
-        // Liefert alle Kommentare zu dem Post mit der Post-Id pid
-        // im Blog mit der Blog-Id bid
+        /*
+            Liefert alle Kommentare zu dem Post mit der Post-Id pid
+            im Blog mit der Blog-Id bid
+         */
         getAllCommentsOfPost(bid, pid, callback) {
             var request = gapi.client.request({
                 'method': 'GET',
@@ -181,9 +203,11 @@ const model = (function () {
             });
         },
 
-        // Löscht den Kommentar mit der Id cid zu Post mit der Post-Id pid
-        // im Blog mit der Blog-Id bid
-        // Callback wird ohne result aufgerufen
+        /*
+            Löscht den Kommentar mit der Id cid zu Post mit der Post-Id pid
+            im Blog mit der Blog-Id bid
+            Callback wird ohne result aufgerufen
+        */
         deleteComment(bid, pid, cid, callback) {
             var path = pathBlogs + "/" + bid + '/posts/' + pid + "/comments/" + cid;
             console.log(path);
@@ -195,8 +219,10 @@ const model = (function () {
             request.execute(callback);
         },
 
-        // Fügt dem Blog mit der Blog-Id bid einen neuen Post
-        // mit title und content hinzu, Callback wird mit neuem Post aufgerufen
+        /*
+            Fügt dem Blog mit der Blog-Id bid einen neuen Post
+            mit title und content hinzu, Callback wird mit neuem Post aufgerufen
+         */
         addNewPost(bid, title, content, callback) {
             var body = {
                 kind: "blogger#post",
@@ -216,8 +242,10 @@ const model = (function () {
             request.execute(callback);
         },
 
-        // Aktualisiert title und content im geänderten Post
-        // mit der Post-Id pid im Blog mit der Blog-Id bid
+        /*
+            Aktualisiert title und content im geänderten Post
+            mit der Post-Id pid im Blog mit der Blog-Id bid
+         */
         updatePost(bid, pid, title, content, callback) {
             var body = {
                 kind: "blogger#post",
@@ -238,8 +266,10 @@ const model = (function () {
             request.execute(callback);
         },
 
-        // Löscht den Post mit der Post-Id pid im Blog mit der Blog-Id bid,
-        // Callback wird ohne result aufgerufen
+        /*
+            Löscht den Post mit der Post-Id pid im Blog mit der Blog-Id bid,
+            Callback wird ohne result aufgerufen
+         */
         deletePost(bid, pid, callback) {
             var path = pathBlogs + "/" + bid + '/posts/' + pid;
             console.log(path);
