@@ -176,7 +176,7 @@ const model = (function () {
 
             request.execute((result) => {
                 var comments = [];
-                if(result){
+                if(result.length > 0){
                     for (let c of result.items){
                         comments.push(new Comment(c));
                     }

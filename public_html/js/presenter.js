@@ -109,13 +109,32 @@ const presenter = (function () {
             console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
 
             model.getAllPostsOfBlog(bid, (posts) => {
+                console.log("Posts erhalten: " + posts);
                 if (!posts)
                     return;
                 let blogPosts = bloguebersicht.render(posts);
                 replace("content", blogPosts);
             });
+        },
+
+        // Wird vom Router augerufen, wenn eine Blog-Detailansicht angezeigt werden soll
+        showDetailView(bid, pid) {
+            console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
+
+            model.getPost(bid, pid, (post) => {
+                console.log("Post erhalten: " + post);
+                if (!post)
+                    return;
+
+                model.getAllCommentsOfPost(bid, pid, (comments) =>{
+                    if(!comments)
+                        return;
+
+                    
+
+                })
+            })
+
         }
-
-
-    };
+    }
 })();

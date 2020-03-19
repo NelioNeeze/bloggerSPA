@@ -72,6 +72,7 @@ const detailansicht = {
             for(let c of comments){
                 let temp = comment.cloneNode(true);
                 setDataInfo(temp, c);
+
                 page.append(temp);
             }
         })
