@@ -58,7 +58,7 @@ const bloguebersicht = {
 }
 
 const detailansicht = {
-    render(currentPost){
+    render(currentPost, allCommentsOfPost){
         console.log("View: Füllen der Detailansicht");
 
         let page = document.getElementById("detailansicht").cloneNode(true);
@@ -73,17 +73,14 @@ const detailansicht = {
 
         page.append(post);
 
-        model.getAllCommentsOfPost(currentPost.blog.id, currentPost.id, (comments) => {
-            if(!comments){
-                return;
-            }
-            for(let c of comments){
-                let temp = comment.cloneNode(true);
-                setDataInfo(temp, c);
 
-                page.append(temp);
-            }
-        })
+        for(let c of allCommentsOfPost){
+            let temp = comment.cloneNode(true);
+            setDataInfo(temp, c);
+
+            page.append(temp);
+        }
+
 
         return page;
     }

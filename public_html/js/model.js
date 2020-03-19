@@ -112,12 +112,12 @@ const model = (function () {
             });
             // Execute the API request.
             request.execute((result) => {
+
                 var blogs = [];
-                if(result.items.length > 0) {
-                    for (let b of result.items) {
-                        blogs.push(new Blog(b));
-                    }
+                for (let b of result.items) {
+                    blogs.push(new Blog(b));
                 }
+
                 callback(blogs);
             });
         },
@@ -143,11 +143,10 @@ const model = (function () {
 
             request.execute((result) => {
                 var posts = [];
-                if (result.items.length > 0) {
-                    for (let p of result.items) {
-                        posts.push(new Post(p));
-                    }
+                for (let p of result.items) {
+                    posts.push(new Post(p));
                 }
+
                 callback(posts);
                 });
         },
@@ -174,11 +173,10 @@ const model = (function () {
 
             request.execute((result) => {
                 var comments = [];
-                if(result.items.length > 0) {
-                    for (let c of result.items) {
-                        comments.push(new Comment(c));
-                    }
+                for (let c of result.items) {
+                    comments.push(new Comment(c));
                 }
+
                 callback(comments);
             });
         },

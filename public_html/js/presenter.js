@@ -36,7 +36,7 @@ const presenter = (function () {
 
             // Test für Funktion von showBlogOverview
             blogId = blogs[0].blogid;
-            //presenter.showBlogOverview(blogId);
+            presenter.showBlogOverview(blogId);
 
 
             //Test für Funktion von showDetailView
@@ -116,12 +116,11 @@ const presenter = (function () {
             console.log(`Aufruf von presenter.showBlogOverview(${blogId})`);
 
             model.getPost(bid, pid, (post) => {
-                if (!post)
-                    return;
-                let detailView = detailansicht.render(post);
-                replace("content", detailView);
+                model.getAllCommentsOfPost(bid, pid, (comments) => {
+                    let detailView = detailansicht.render(post, comments);
+                    replace("content", detailView);
+                })
             })
-
         }
     }
 })();
