@@ -9,8 +9,8 @@ const model = (function () {
     let pathBlogs = 'blogger/v3/blogs';
 
     // Private Funktionen
-
-    /*  Formatiert den Datum-String in date in zwei mögliche Datum-Strings:
+    /*
+        Formatiert den Datum-String in date in zwei mögliche Datum-Strings:
         long = false: 24.10.2018
         long = true: Mittwoch, 24. Oktober 2018, 12:21
      */
@@ -84,16 +84,10 @@ const model = (function () {
 
     // Oeffentliche Methoden
     return {
-        /*
-            Setter für loggedIn
-         */
         setLoggedIn(b){
             loggedIn = b;
         },
 
-        /*
-            Getter für loggedIn
-         */
         isLoggedIn(){
             return loggedIn;
         },

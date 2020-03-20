@@ -17,7 +17,8 @@ const presenter = (function () {
      */
     function initPage() {
         console.log("Presenter: Aufruf von initPage()");
-        document.addEventListener("click", handleClicks);
+        let main = document.getElementById("main-content");
+        main.addEventListener("click", handleClicks);
 
         model.getAllBlogs((blogs) => {
             if(blogs){
@@ -92,6 +93,7 @@ const presenter = (function () {
 
                 break;
         }
+
         if(source){
             let action = source.dataset.action;
             if(action)
@@ -149,7 +151,6 @@ const presenter = (function () {
         console.log(`Presenter: Aufruf von deleteComment() mit BlogID ${bid}, PostID ${pid} und CommentID ${cid}`);
 
         if(bid && pid && cid){
-
             model.deleteComment(bid, pid, cid, (success) => {
                 //TODO checken ob erfolgreich oder nicht
             })
