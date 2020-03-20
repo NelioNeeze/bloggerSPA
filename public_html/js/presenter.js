@@ -13,61 +13,6 @@ const presenter = (function () {
     let owner = undefined;
 
     /*
-        Zentraler Eventhandler
-     */
-    function handleClicks(event){
-        let source = null;
-
-        switch(event.target.tagName){
-            case "BUTTON":
-                source = event.target;
-                break;
-            case "A":
-                router.handleNavigationEvent(event);
-                break;
-            default:
-
-                break;
-        }
-        if(source){
-            let action = source.dataset.action;
-            if(action)
-                presenter[action](source.id);
-            let path = source.dataset.path;
-            if (path)
-                router.navigateToPage(path);
-        }
-    }
-
-    /*
-        Erstellen eines neuen Posts
-     */
-    function addNewPost(){
-
-    }
-
-    /*
-        Bearbeiten eines Posts
-     */
-    function updatePost(){
-
-    }
-
-    /*
-        Löschen eines Posts
-     */
-    function deletePost(){
-
-    }
-
-    /*
-        Löschen eines Kommentars
-     */
-    function deleteComment(){
-
-    }
-
-    /*
         Initialisiert die allgemeinen Teile der Seite
      */
     function initPage() {
@@ -84,6 +29,7 @@ const presenter = (function () {
                 let current = currentBlog.render(blogs[0]);
                 replace("currentBlog", current);
 
+                presenter.showBlogOverview(blogs[0].blogid);
             }
         });
 
@@ -127,6 +73,86 @@ const presenter = (function () {
             content.remove();
         if (element)
             main.append(element);
+    }
+
+    /*
+        Zentraler Eventhandler
+     */
+    function handleClicks(event){
+        let source = null;
+
+        switch(event.target.tagName){
+            case "BUTTON":
+                source = event.target;
+                break;
+            case "A":
+                router.handleNavigationEvent(event);
+                break;
+            default:
+
+                break;
+        }
+        if(source){
+            let action = source.dataset.action;
+            if(action)
+                presenter[action](source.id);
+
+            let path = source.dataset.path;
+            if (path)
+                router.navigateToPage(path);
+        }
+    }
+
+    /*
+        Erstellen eines neuen Posts
+     */
+    function addNewPost(bid, title, content){
+        console.log(`Presenter: Aufruf von addNewPost() mit BlogID ${bid}`);
+
+        if(bid){
+            model.addNewPost(bid, title, content, (success) => {
+                //TODO checken ob erfolgreich oder nicht
+            })
+        }
+    }
+
+    /*
+        Bearbeiten eines Posts
+     */
+    function updatePost(bid, pid, title, content){
+        console.log(`Presenter: Aufruf von updatePost() mit BlogID ${bid} und PostID ${pid}`);
+
+        if(bid && pid){
+            model.updatePost(bid, pid, title, content, (success) => {
+                //TODO checken ob erfolgreich oder nicht
+            })
+        }
+    }
+
+    /*
+        Löschen eines Posts
+     */
+    function deletePost(bid, pid){
+        console.log(`Presenter: Aufruf von deletePost() mit BlogID ${bid} und PostID ${pid}`);
+
+        if(bid && pid){
+            model.deletePost(bid, pid, (success) => {
+                //TODO checken ob erfolgreich oder nicht
+            })
+        }
+    }
+
+    /*
+        Löschen eines Kommentars
+     */
+    function deleteComment(bid, pid, cid){
+        console.log(`Presenter: Aufruf von deleteComment() mit BlogID ${bid}, PostID ${pid} und CommentID ${cid}`);
+
+        if(bid && pid && cid){
+            model.deleteComment(bid, pid, cid, (success) => {
+                //TODO checken ob erfolgreich oder nicht
+            })
+        }
     }
 
     /*

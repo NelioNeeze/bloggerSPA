@@ -5,6 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
+<!--suppress ALL -->
 <html>
     <head>
         <title>Blogger</title>
@@ -73,7 +74,7 @@ and open the template in the editor.
             <!-- Blogübersicht -->
             <div id="bloguebersicht">
                     <nav>
-                        <button type="button" data-action="addNewPost">Neuer Post</button>
+                        <button type="button" id="%blogid" data-action="addNewPost">Neuer Post</button>
                     </nav>
 				
                     <article>
@@ -87,9 +88,9 @@ and open the template in the editor.
 
                             <footer>
                                 <nav>
-                                     <button type="button" data-path="">Ansehen</button>
-                                     <button type="button" data-action="updatePost">Bearbeiten</button>
-                                     <button type="button" data-action="deletePost">Löschen</button>
+                                     <button type="button" id="%postid" data-path="">Ansehen</button>
+                                     <button type="button" id="%postid" data-path="">Bearbeiten</button>
+                                     <button type="button" id="%postid" data-action="deletePost">Löschen</button>
                                 </nav>
                             </footer>
                     </article>	
@@ -99,7 +100,7 @@ and open the template in the editor.
             <div id="detailansicht">
                 <article>
                     <nav>
-                            <button type="button">Blogübersicht</button>
+                            <button type="button" data-path="">Blogübersicht</button>
                     </nav>
                         
                     <header>
@@ -109,8 +110,8 @@ and open the template in the editor.
                                 <p>%comments Kommentare</p></h5>
                                                 
                             <nav>
-                                 <button type="button" data-action="updatePost">Bearbeiten</button>
-                                 <button type="button" data-action="deletePost">Löschen</button>
+                                 <button type="button" id="%postid" data-path="">Bearbeiten</button>
+                                 <button type="button" id="%postid" data-action="deletePost">Löschen</button>
                             </nav>
                     </header>
                         
@@ -129,7 +130,7 @@ and open the template in the editor.
                     </section>
                          
                     <footer>	
-                            <button type="button" data-action="deleteComment">Löschen</button>
+                            <button type="button" id="%commentid" data-action="deleteComment">Löschen</button>
                     </footer>
                 </article>
             </div>
