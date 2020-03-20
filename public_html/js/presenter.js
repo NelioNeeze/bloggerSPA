@@ -149,6 +149,7 @@ const presenter = (function () {
         console.log(`Presenter: Aufruf von deleteComment() mit BlogID ${bid}, PostID ${pid} und CommentID ${cid}`);
 
         if(bid && pid && cid){
+
             model.deleteComment(bid, pid, cid, (success) => {
                 //TODO checken ob erfolgreich oder nicht
             })

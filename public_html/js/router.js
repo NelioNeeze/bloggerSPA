@@ -9,7 +9,9 @@ const router = (function () {
     // Private Variable
     let mapRouteToHandler = new Map();
 
-    // Oeffentliche Methoden
+    /*
+        Oeffentliche Methoden
+    */
     return {
         // Fügt eine neue Route (URL, auszuführende Funktion) zu der Map hinzu
         addRoute: function (route, handler) {
@@ -48,12 +50,20 @@ const router = (function () {
         presenter.showStartPage();
     });
 
-    router.addRoute('blogOverview', function (url) {
+    router.addRoute('bloguebersicht', function (url) {
         // Get the index of which blog we want to show and call the appropriate function.
-        var blogId = url.split('blogOverview/')[1].trim();
+        var blogId = url.split('bloguebersicht/')[1].trim();
         //viewModel.blogId = id;
         presenter.showBlogOverview(blogId);
     });
+
+    router.addRoute( 'detailansicht', function (url) {
+        let temp = url.split('detailansicht/')[1].trim();
+        var blogId = temp[1].split('/')[0].trim();
+        var postId = temp[1].split('/')[1].trim();
+
+        presenter.showDetailView(blogId, postId);
+    })
 
 
     if (window) {
