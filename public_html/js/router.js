@@ -28,6 +28,7 @@ const router = (function () {
         handleNavigationEvent: function (event) {
             event.preventDefault();
             let url = event.target.href;
+            console.log(`Router: Aufruf von handleNavigationEvent() mit URL ${url}`);
             this.navigateToPage(url);
         },
 
@@ -59,9 +60,8 @@ const router = (function () {
 
     router.addRoute( 'detailansicht', function (url) {
         let temp = url.split('detailansicht/')[1].trim();
-        var blogId = temp[1].split('/')[0].trim();
-        var postId = temp[1].split('/')[1].trim();
-
+        var blogId = temp.split('/')[0];
+        var postId = temp.split('/')[1];
         presenter.showDetailView(blogId, postId);
     })
 

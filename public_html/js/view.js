@@ -35,8 +35,8 @@ const currentBlog = {
         page.removeAttribute("id");
 
         let div = page.querySelector("div");
-        let a = div.querySelector("a");
-        a.setAttribute("href", currentBlog.url);
+        let button = div.querySelector("button");
+        button.setAttribute("data-url", currentBlog.url);
         setDataInfo(div, currentBlog);
 
         return page;
@@ -80,6 +80,7 @@ const detailansicht = {
 
         let page = document.getElementById("detailansicht").cloneNode(true);
         page.removeAttribute("id");
+
         let post = page.firstElementChild;
         page.firstElementChild.remove();
         setDataInfo(post, currentPost);

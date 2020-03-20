@@ -17,8 +17,8 @@ const presenter = (function () {
      */
     function initPage() {
         console.log("Presenter: Aufruf von initPage()");
-        let main = document.getElementById("main-content");
-        main.addEventListener("click", handleClicks);
+        document.getElementById("main-content").addEventListener("click", handleClicks);
+        document.getElementById("header").addEventListener("click", handleClicks);
 
         model.getAllBlogs((blogs) => {
             if(blogs){
@@ -26,11 +26,9 @@ const presenter = (function () {
                 let nav = navigation.render(blogs);
                 replace("navmenu", nav.firstElementChild);
 
-                console.log("Presenter: Füllen des momentanen Blogs (Header)");
+                console.log("Presenter: Füllen des aktuellsten Blogs (Header)");
                 let current = currentBlog.render(blogs[0]);
                 replace("currentBlog", current);
-
-                presenter.showBlogOverview(blogs[0].blogid);
             }
         });
 
@@ -58,10 +56,6 @@ const presenter = (function () {
         blogId = -1;
         postId = -1;
         owner = undefined;
-
-        document.getElementById("greeting").innerHTML = "";
-        document.getElementById("navmenu").innerHTML = "";
-        document.getElementById("currentBlog").innerHTML = "";
     }
 
     /*
@@ -96,13 +90,24 @@ const presenter = (function () {
 
         if(source){
             let action = source.dataset.action;
-            if(action)
-                console.log(`Presenter: Button ${event.target.innerHTML} besitzt eine data-action.`);
-                presenter[action](source.id);
+            if(action) {
+                console.log(`Presenter: Button ${event.target.innerHTML} besitzt eine data-action: ${action}`);
+                switch (action) {
+                    case "deletePost":
+                        deletePost(source.dataset.blogid, source.id);
+                        break;
+                    case "deleteComment":
+                        deleteComment(source.dataset.blogid, source.dataset.postid, source.id);
+                        break;
+                    case "GoogleView":
+                        let url = source.dataset.url;
+                        googleView(url);
+                }
+            }
 
             let path = source.dataset.path;
             if (path)
-                console.log(`Presenter: Button ${event.target.innerHTML} bestitzt einen data-path.`);
+                console.log(`Presenter: Button ${event.target.innerHTML} bestitzt einen data-path: ${path}`);
                 router.navigateToPage(path);
         }
     }
@@ -118,6 +123,14 @@ const presenter = (function () {
                 //TODO checken ob erfolgreich oder nicht
             })
         }
+    }
+
+    /*
+        Öffnet die Google View in einem neuen Browserfenster
+     */
+    function googleView(url){
+        window.open(url, "_blank");
+        console.log("Presenter: Vieweransicht von Google mit URL " + url + " wurde aufgerufen");
     }
 
     /*
@@ -186,6 +199,10 @@ const presenter = (function () {
 
             //Teste ob Blog mindestens einen Post besitzt
             model.getBlog(bid, (current) => {
+                // Aktuellen Blog im Header aktualisieren
+                let activeBlog = currentBlog.render(current);
+                replace("currentBlog", activeBlog);
+
                 if(current.postcount > 0){
                     //Wenn ja, nehme alle Blogposts
                     model.getAllPostsOfBlog(bid, (posts) => {

@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
-<!--suppress ALL -->
 <html>
     <head>
         <title>Blogger</title>
@@ -24,11 +16,10 @@ and open the template in the editor.
     </head>
 
     <body>
-	    <header>
+	    <header id="header">
             <p id="greeting"></p>
             <button id="sign-in-or-out-button">Anmelden</button>
             <br>
-            <img src="./img/menu.png" alt="Menu" width="24">
             <nav id="navmenu">
             </nav>
             <div id="currentBlog">
@@ -43,7 +34,7 @@ and open the template in the editor.
 	    <hr>
 	    <footer>
             <p>
-		    Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
+		        Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
             </p>
 	    </footer>
         
@@ -52,9 +43,7 @@ and open the template in the editor.
             <div id="navigation">
                 <ul>
                     <li>
-                        <a data-path="">
-                            <p>%blogname (%postcount Beiträge)</p>
-                        </a>
+                        <a href="/bloguebersicht/%blogid">%blogname (%postcount Beiträge)</a>
                     </li>
                 </ul>
             </div>
@@ -65,9 +54,7 @@ and open the template in the editor.
                     <p>Beiträge: %postcount</p>
                     <p>Erstellt am: %shortCreateDate</p>
                     <p>Bearbeitet am: %shortEditDate</p>
-                    <a href="">
-                        <button type="button">Google Blogansicht</button>
-                    </a>
+                    <button type="button" data-url="%url" data-action="GoogleView">Google Blogansicht</button>
                 </div>
             </div>
                 
@@ -87,9 +74,9 @@ and open the template in the editor.
 
                             <footer>
                                 <nav>
-                                     <button type="button" id="%postid" data-path="">Ansehen</button>
+                                     <button type="button" id="%postid" data-path="/detailansicht/%blogid/%postid">Ansehen</button>
                                      <button type="button" id="%postid" data-path="">Bearbeiten</button>
-                                     <button type="button" id="%postid" data-blogid="" data-action="deletePost">Löschen</button>
+                                     <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
                                 </nav>
                             </footer>
                     </article>	
@@ -99,7 +86,7 @@ and open the template in the editor.
             <div id="detailansicht">
                 <article>
                     <nav>
-                            <button type="button" data-path="">Blogübersicht</button>
+                            <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
                     </nav>
                         
                     <header>
@@ -110,7 +97,7 @@ and open the template in the editor.
                                                 
                             <nav>
                                  <button type="button" id="%postid" data-path="">Bearbeiten</button>
-                                 <button type="button" id="%postid" data-blogid="" data-action="deletePost">Löschen</button>
+                                 <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
                             </nav>
                     </header>
                         
@@ -129,7 +116,7 @@ and open the template in the editor.
                     </section>
                          
                     <footer>	
-                            <button type="button" id="%commentid" data-postid="" data-blogid=""data-action="deleteComment">Löschen</button>
+                            <button type="button" id="%commentid" data-postid="%postid" data-blogid="%blogid"data-action="deleteComment">Löschen</button>
                     </footer>
                 </article>
             </div>
