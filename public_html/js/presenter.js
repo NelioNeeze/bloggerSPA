@@ -80,27 +80,29 @@ const presenter = (function () {
         Zentraler Eventhandler
      */
     function handleClicks(event){
+        console.log(`Presenter: Aufruf von handleClicks()`);
         let source = null;
 
         switch(event.target.tagName){
             case "BUTTON":
+                console.log(`Presenter: Button ${event.target.innerHTML} wurde geklickt.`);
                 source = event.target;
                 break;
             case "A":
+                console.log(`Presenter: Link ${event.target.innerHTML} wurde geklickt.`);
                 router.handleNavigationEvent(event);
-                break;
-            default:
-
                 break;
         }
 
         if(source){
             let action = source.dataset.action;
             if(action)
+                console.log(`Presenter: Button ${event.target.innerHTML} besitzt eine data-action.`);
                 presenter[action](source.id);
 
             let path = source.dataset.path;
             if (path)
+                console.log(`Presenter: Button ${event.target.innerHTML} bestitzt einen data-path.`);
                 router.navigateToPage(path);
         }
     }

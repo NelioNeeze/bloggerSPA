@@ -59,6 +59,7 @@ const bloguebersicht = {
             for(let p of allPosts){
                 let temp = post.cloneNode(true);
                 setDataInfo(temp, p);
+
                 page.append(temp);
             }
         }
