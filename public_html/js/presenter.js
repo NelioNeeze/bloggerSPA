@@ -19,24 +19,31 @@ const presenter = (function () {
         console.log("Presenter: Aufruf von initPage()");
         document.getElementById("main-content").addEventListener("click", handleClicks);
         document.getElementById("header").addEventListener("click", handleClicks);
+        if(init == false) {
+            model.getAllBlogs((blogs) => {
+                if (blogs) {
+                    console.log("Presenter: Füllen der Navigation");
+                    let nav = navigation.render(blogs);
+                    replace("navmenu", nav.firstElementChild);
 
-        model.getAllBlogs((blogs) => {
-            if(blogs){
-                console.log("Presenter: Füllen der Navigation");
-                let nav = navigation.render(blogs);
-                replace("navmenu", nav.firstElementChild);
+                    console.log("Presenter: Füllen des aktuellsten Blogs (Header)");
+                    let current = currentBlog.render(blogs[0]);
+                    replace("currentBlog", current);
 
-                console.log("Presenter: Füllen des aktuellsten Blogs (Header)");
-                let current = currentBlog.render(blogs[0]);
-                replace("currentBlog", current);
-            }
-        });
+                    model.getAllPostsOfBlog(blogs[0].blogid, (posts) => {
+                        let currentOverview = bloguebersicht.render(posts);
+                        replace("content", currentOverview);
+                    })
+                }
+            });
 
-        model.getSelf((result) => {
-            owner = result.displayName;
-            console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
-            document.getElementById("greeting").innerHTML = "Greetings, " + owner;
-        });
+
+            model.getSelf((result) => {
+                owner = result.displayName;
+                console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
+                document.getElementById("greeting").innerHTML = "Greetings, " + owner;
+            });
+        }
 
         // Das muss später an geeigneter Stelle in Ihren Code hinein.
         init = true;
@@ -56,6 +63,11 @@ const presenter = (function () {
         blogId = -1;
         postId = -1;
         owner = undefined;
+
+        document.getElementById("currentBlog").innerHTML = "";
+        document.getElementById("greeting").innerHTML = "";
+        document.getElementById("navmenu").innerHTML = "";
+        document.getElementById("content").innerHTML = "";
     }
 
     /*
