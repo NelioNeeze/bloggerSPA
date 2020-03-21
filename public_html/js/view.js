@@ -118,11 +118,6 @@ const editView = {
 
         if(post){
             setDataInfo(page, post);
-        } else {
-            page.querySelectorAll("p")[0].innerHTML = ""; //Titel
-            page.querySelectorAll("p")[1].innerHTML = ""; //Veröffentlichungsdatum
-            page.querySelectorAll("p")[2].innerHTML = ""; //Bearbeitungsdatum
-            page.querySelectorAll("p")[3].innerHTML = ""; //Inhalt
         }
 
         let speichern = function(event) {
@@ -133,7 +128,7 @@ const editView = {
             let content = page.querySelectorAll("p")[3].innerHTML;
 
             if (!(/[a-zA-Z0-9]/.test(title.charAt(0)))) {
-                alert("The title's first character has to be alphanumeric.");
+                alert("Der erste Buchstabe des Titels muss alphanumerisch sein.");
                 while(titleElem.hasChildNodes()){
                     titleElem.removeChild(titleElem.firstChild);
                 }
@@ -146,7 +141,7 @@ const editView = {
                         while(titleElem.hasChildNodes()){
                             titleElem.removeChild(titleElem.firstChild);
                         }
-                        alert("The title cannot contain line-breaks");
+                        alert("Der Titel darf keine Umbrüche enthalten.");
                         return false;
                     }
                 }
