@@ -125,7 +125,7 @@ const editView = {
 
             let titleElem = page.querySelectorAll("p")[0];
             let title = titleElem.innerHTML;
-            let content = page.querySelectorAll("p")[3].innerHTML;
+            let content = page.querySelector("div").innerHTML;
 
             if (!(/[a-zA-Z0-9]/.test(title.charAt(0)))) {
                 alert("Der erste Buchstabe des Titels muss alphanumerisch sein.");
