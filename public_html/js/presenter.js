@@ -231,7 +231,7 @@ const presenter = (function () {
                     });
                 }
                 else{
-                    //Wenn nein, ...
+                    replace("content", "");
                 }
             })
         },

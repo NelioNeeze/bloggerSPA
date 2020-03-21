@@ -168,19 +168,13 @@ const addPost = {
             if (event.target.value === "save") {
                 console.log(`View: handleSave: Speichern Button wurde gedrückt`);
                 event.preventDefault();
-
-                //TODO remove this once done testing
-                console.log("Blog ID: " + blog.blogid);
-                console.log("Titel: " + form.title.value);
-                console.log("Content: " + form.content.value);
-
+                let form = document.getElementById("addPost");
                 presenter.addPost(blog.blogid, form.title.value, form.content.value);
             }
         };
 
         let page = document.getElementById("addPost").cloneNode(true);
         page.removeAttribute('id');
-        let form = page.querySelector("form");
 
         setDataInfo(page, blog);
 
