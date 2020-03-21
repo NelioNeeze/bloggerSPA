@@ -28,7 +28,10 @@ const model = (function () {
             let months =
                 ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
-            return weekdays[date1.getDay()] + ", " + date1.getDate() + "." + months[date1.getMonth() - 1] + " " + date1.getFullYear()+ ", " + date1.getHours() + ":" + date1.getMinutes()
+            let minutes = date1.getMinutes();
+            if(minutes < 10)
+                minutes = "0" + minutes;
+            return weekdays[date1.getDay()] + ", " + date1.getDate() + "." + months[date1.getMonth() - 1] + " " + date1.getFullYear()+ ", " + date1.getHours() + ":" + minutes;
         }
     }
 

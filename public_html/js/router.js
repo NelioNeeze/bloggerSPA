@@ -70,6 +70,12 @@ const router = (function () {
         presenter.showAddPost(blogId);
     });
 
+    router.addRoute('edit',function (url) {
+        let temp = url.split('edit/')[1].trim();
+        var blogId = temp.split('/')[0];
+        var postId = temp.split('/')[1];
+        presenter.showEditView(blogId, postId);
+    })
 
     if (window) {
         window.addEventListener('popstate', (event) => {

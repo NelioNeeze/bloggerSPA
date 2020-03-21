@@ -110,52 +110,76 @@ const detailansicht = {
 
 /*
     Formular für das editieren eines Posts
-
+*/
 const editView = {
     render(blog, post) {
-        console.log(`View: Editieren eines Posts`)
+        let page = document.getElementById("editor").cloneNode(true);
+        page.removeAttribute("id");
 
-        //Eventhandler fürs Speichern
-        let handleSave = function (event) {
-            if (event.target.value === "save") {
-                event.preventDefault();
-                //TODO
+        if(post){
+            setDataInfo(page, post);
+        } else {
+            page.querySelectorAll("p")[0].innerHTML = ""; //Titel
+            page.querySelectorAll("p")[1].innerHTML = ""; //Veröffentlichungsdatum
+            page.querySelectorAll("p")[2].innerHTML = ""; //Bearbeitungsdatum
+            page.querySelectorAll("p")[3].innerHTML = ""; //Inhalt
+        }
+
+        let speichern = function(event) {
+            event.preventDefault();
+
+            let titleElem = page.querySelectorAll("p")[0];
+            let title = titleElem.innerHTML;
+            let content = page.querySelectorAll("p")[3].innerHTML;
+
+            if (!(/[a-zA-Z0-9]/.test(title.charAt(0)))) {
+                alert("The title's first character has to be alphanumeric.");
+                while(titleElem.hasChildNodes()){
+                    titleElem.removeChild(titleElem.firstChild);
+                }
+                return false;
+            }else if (titleElem.firstChild){
+                let children = titleElem.children;
+                for(let i = 0; i < children.length; i++){
+                    let child = children[i];
+                    if (child.tagName === "DIV"){
+                        while(titleElem.hasChildNodes()){
+                            titleElem.removeChild(titleElem.firstChild);
+                        }
+                        alert("The title cannot contain line-breaks");
+                        return false;
+                    }
+                }
+            }
+            if(confirm("Änderungen speichern?")) {
+                if(post) {
+                    post.title = title;
+                    post.content = content;
+                    presenter.editPost(blog.blogid, post.postid, post.title, post.content);
+                    window.history.back();
+
+                } else {
+                    presenter.addNewPost(blog.blogid, title, content);
+                    window.history.back();
+                }
             }
         };
 
-        //Befüllen des Formulars mit vorhandenen Daten
-        let fillForm = function(){
-            form.title.value = post.title;
-            form.content.value = post.content;
-        }
+        let zurueck = function(event) {
+            if(confirm("Nicht speichern?"))
+                window.history.back();
+        };
 
-        //Wenn Post vorhanden, dann edit, sonst neuen Post anlegen
-        let edit;
-        if (post)
-            edit = true;
-            console.log(`View: Post ${post.title} wird bearbeitet`);
-        else
-            edit = false;
-            console.log(`View: Neuer Post in Blog ${blog.name} wird angelegt.`);
+        let speichernButton = page.querySelectorAll("button")[0];
+        speichernButton.addEventListener("click", speichern);
 
-        let page = document.getElementById("editPost").cloneNode(true);
-        page.removeAttribute('id');
-        let form = page.querySelector("form");
+        let zurueckButton = page.querySelectorAll("button")[1];
+        zurueckButton.addEventListener("click", zurueck);
 
-        //Wenn edit, fülle Formular mit Daten
-        if (edit) {
-            fillForm();
-            let path = `detailansicht/${post.blogid}/${post.postid}`;
-            let buttons = form.querySelectorAll("button");
-            for (let b of buttons){
-                b.dataset.path = path;
-            }
-        }
-        page.addEventListener("click", handleSave);
         return page;
     }
-}
-*/
+};
+
 
 /*
     Formular für das Anlegen eines Posts
@@ -168,14 +192,13 @@ const addPost = {
             if (event.target.value === "save") {
                 console.log(`View: handleSave: Speichern Button wurde gedrückt`);
                 event.preventDefault();
-                let form = document.getElementById("addPost");
+                let form = document.getElementById("addPostForm");
                 presenter.addPost(blog.blogid, form.title.value, form.content.value);
             }
         };
 
         let page = document.getElementById("addPost").cloneNode(true);
         page.removeAttribute('id');
-
         setDataInfo(page, blog);
 
         page.addEventListener("click", handleSave);

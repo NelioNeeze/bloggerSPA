@@ -254,15 +254,8 @@ const presenter = (function () {
         },
 
         /*
-            Wird vom Router aufgerufen, wenn ein Post editiert werden soll
-
-        showEdit(bid, pid){
-            if(!init){
-                initPage();
-            }
-        },
-        */
-
+            Wird vom Router aufgerufen, wenn ein Post hinzugefügt werden soll
+         */
         showAddPost(bid) {
             console.log(`Presenter: Aufruf von showAddPost für Blog ID ${bid}`);
 
@@ -272,9 +265,36 @@ const presenter = (function () {
             })
         },
 
+        /*
+            Öffentliche Methode zum hinzufügen von Posts zu einem Blog
+         */
          addPost(bid, title, content){
             console.log(`Presenter: Aufruf von addPost() für neuen Post ${title}`);
+
             addNewPost(bid, title, content);
+        },
+
+        /*
+            Wird vom Router aufgerufen, wenn ein Post editiert werden soll
+        */
+        showEditView(bid, pid){
+            console.log(`Presenter: Aufruf von showEditView für PostID ${pid}`);
+
+            model.getBlog(bid, (blog) => {
+                model.getPost(bid, pid, (post) => {
+                    let edit = editView.render(blog, post);
+                    replace("content", edit);
+                })
+            })
+        },
+
+        /*
+            Öffentliche Methode zum updaten eines Posts
+         */
+        editPost(bid, pid, title, content){
+            console.log(`Presenter: Aufruf von editPost() für bestehenden Post ${pid}`);
+
+            updatePost(bid, pid, title, content);
         }
     }
 })();

@@ -76,7 +76,7 @@
                             <footer>
                                 <nav>
                                      <button type="button" id="%postid" data-path="/detailansicht/%blogid/%postid">Ansehen</button>
-                                     <button type="button" id="%postid" data-path="">Bearbeiten</button>
+                                     <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
                                      <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
                                 </nav>
                             </footer>
@@ -97,7 +97,7 @@
                                 <p>%comments Kommentare</p></h5>
                                                 
                             <nav>
-                                 <button type="button" id="%postid" data-path="">Bearbeiten</button>
+                                 <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
                                  <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
                             </nav>
                     </header>
@@ -122,22 +122,38 @@
                 </article>
             </div>
 
-            <!----- Post editieren ----->
+            <!----- Post hinzufügen ----->
             <div id="addPost">
                     <nav>
                         <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
                     </nav>
 
-                    <form id="addPost" class="form" method="get">
+                    <form id="addPostForm" class="form" method="get">
                         <label for="title">Titel:</label>
                         <input id="title" type="text" name="title"></input>
 
                         <textarea id="content" type="text" name="content"></textarea>
 
                         <nav>
-                            <button type="reset">Zurücksetzen</button>
                             <button type="button" value="cancel" data-path="/bloguebersicht/%blogid">Abbrechen</button>
                             <button type="button" value="save" data-path="/bloguebersicht/%blogid">Speichern</button>
+                        </nav>
+                    </form>
+            </div>
+
+            <!---- Post editieren ---->
+
+            <div id="editor">
+                    <form id="edit" method="post">
+                        <label for="title"> Titel: </label>
+                        <p id="editTitle" contenteditable="true">%title</p>
+                        <p id="editPublished">Erstellt: %longCreateDate</p>
+                        <p id="editUpdated">Bearbeitet: %longEditDate</p>
+                        <label for="text"> Inhalt: </label>
+                        <p id="editContent" contenteditable="true">%content</p>
+                        <nav>
+                            <button type="submit">Speichern</button>
+                            <button type="reset">Abbrechen</button>
                         </nav>
                     </form>
             </div>
