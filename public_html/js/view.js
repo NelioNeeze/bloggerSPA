@@ -52,8 +52,14 @@ const bloguebersicht = {
 
         let page = document.getElementById("bloguebersicht").cloneNode(true);
         page.removeAttribute("id");
+
+        let nav = page.querySelector("nav");
+        page.querySelector("nav").remove();
+        setDataInfo(nav, allPosts[0]);
+        page.append(nav);
+
         let post = page.querySelector("article");
-        page.lastElementChild.remove();
+        page.querySelector("article").remove();
 
         if(allPosts){
             for(let p of allPosts){
@@ -98,6 +104,87 @@ const detailansicht = {
             }
         }
 
+        return page;
+    }
+}
+
+/*
+    Formular für das editieren eines Posts
+
+const editView = {
+    render(blog, post) {
+        console.log(`View: Editieren eines Posts`)
+
+        //Eventhandler fürs Speichern
+        let handleSave = function (event) {
+            if (event.target.value === "save") {
+                event.preventDefault();
+                //TODO
+            }
+        };
+
+        //Befüllen des Formulars mit vorhandenen Daten
+        let fillForm = function(){
+            form.title.value = post.title;
+            form.content.value = post.content;
+        }
+
+        //Wenn Post vorhanden, dann edit, sonst neuen Post anlegen
+        let edit;
+        if (post)
+            edit = true;
+            console.log(`View: Post ${post.title} wird bearbeitet`);
+        else
+            edit = false;
+            console.log(`View: Neuer Post in Blog ${blog.name} wird angelegt.`);
+
+        let page = document.getElementById("editPost").cloneNode(true);
+        page.removeAttribute('id');
+        let form = page.querySelector("form");
+
+        //Wenn edit, fülle Formular mit Daten
+        if (edit) {
+            fillForm();
+            let path = `detailansicht/${post.blogid}/${post.postid}`;
+            let buttons = form.querySelectorAll("button");
+            for (let b of buttons){
+                b.dataset.path = path;
+            }
+        }
+        page.addEventListener("click", handleSave);
+        return page;
+    }
+}
+*/
+
+/*
+    Formular für das Anlegen eines Posts
+ */
+const addPost = {
+    render(blog){
+        console.log(`View: Anlegen eines neuen Posts in Blog ${blog.blogname}`);
+
+        let handleSave = function (event) {
+            if (event.target.value === "save") {
+                console.log(`View: handleSave: Speichern Button wurde gedrückt`);
+                event.preventDefault();
+
+                //TODO remove this once done testing
+                console.log("Blog ID: " + blog.blogid);
+                console.log("Titel: " + form.title.value);
+                console.log("Content: " + form.content.value);
+
+                presenter.addPost(blog.blogid, form.title.value, form.content.value);
+            }
+        };
+
+        let page = document.getElementById("addPost").cloneNode(true);
+        page.removeAttribute('id');
+        let form = page.querySelector("form");
+
+        setDataInfo(page, blog);
+
+        page.addEventListener("click", handleSave);
         return page;
     }
 }

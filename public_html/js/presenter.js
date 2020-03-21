@@ -121,6 +121,14 @@ const presenter = (function () {
         if(bid){
             model.addNewPost(bid, title, content, (success) => {
                 //TODO checken ob erfolgreich oder nicht
+
+                //Header aktualisieren
+                model.getAllBlogs((blogs) => {
+                    replace("navmenu", navigation.render(blogs));
+                    let current = model.getBlog(bid, (current) =>{
+                        replace("currentBlog", currentBlog.render(current));
+                    })
+                })
             })
         }
     }
@@ -155,6 +163,14 @@ const presenter = (function () {
         if(bid && pid){
             model.deletePost(bid, pid, (success) => {
                 //TODO checken ob erfolgreich oder nicht
+
+                //Header aktualisieren
+                model.getAllBlogs((blogs) => {
+                    replace("navmenu", navigation.render(blogs));
+                    let current = model.getBlog(bid, (current) =>{
+                        replace("currentBlog", currentBlog.render(current));
+                    })
+                })
             })
         }
     }
@@ -196,6 +212,9 @@ const presenter = (function () {
          */
         showBlogOverview(bid) {
             console.log(`Presenter: Aufruf von showBlogOverview(${bid})`);
+            if(!init){
+                initPage();
+            }
 
             //Teste ob Blog mindestens einen Post besitzt
             model.getBlog(bid, (current) => {
@@ -212,17 +231,19 @@ const presenter = (function () {
                     });
                 }
                 else{
-                    //Wenn nein, übergebe null
-                    let blogOverview = bloguebersicht.render(null);
+                    //Wenn nein, ...
                 }
             })
         },
 
         /*
-         Wird vom Router augerufen, wenn eine Blog-Detailansicht angezeigt werden soll
+            Wird vom Router augerufen, wenn eine Blog-Detailansicht angezeigt werden soll
          */
         showDetailView(bid, pid) {
             console.log(`Presenter: Aufruf von showDetailView(${bid}, ${pid})`);
+            if(!init){
+                initPage();
+            }
 
             model.getPost(bid, pid, (post) => {
                 model.getAllCommentsOfPost(bid, pid, (comments) => {
@@ -230,6 +251,30 @@ const presenter = (function () {
                     replace("content", detailView);
                 })
             })
+        },
+
+        /*
+            Wird vom Router aufgerufen, wenn ein Post editiert werden soll
+
+        showEdit(bid, pid){
+            if(!init){
+                initPage();
+            }
+        },
+        */
+
+        showAddPost(bid) {
+            console.log(`Presenter: Aufruf von showAddPost für Blog ID ${bid}`);
+
+            model.getBlog(bid, (blog) => {
+                let addView = addPost.render(blog);
+                replace("content", addView);
+            })
+        },
+
+         addPost(bid, title, content){
+            console.log(`Presenter: Aufruf von addPost() für neuen Post ${title}`);
+            addNewPost(bid, title, content);
         }
     }
 })();

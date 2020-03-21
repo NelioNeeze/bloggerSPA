@@ -243,6 +243,7 @@ const model = (function () {
                 'path': pathBlogs + "/" + bid + '/posts',
                 'body': body
             });
+
             // Execute the API request.
             request.execute(callback);
         },

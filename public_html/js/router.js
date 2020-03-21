@@ -63,7 +63,12 @@ const router = (function () {
         var blogId = temp.split('/')[0];
         var postId = temp.split('/')[1];
         presenter.showDetailView(blogId, postId);
-    })
+    });
+
+    router.addRoute('addPost', function (url) {
+        var blogId = url.split('addPost/')[1].trim();
+        presenter.showAddPost(blogId);
+    });
 
 
     if (window) {

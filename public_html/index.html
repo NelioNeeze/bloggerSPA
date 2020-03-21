@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <html>
     <head>
         <title>Blogger</title>
@@ -61,7 +62,7 @@
             <!-- Blogübersicht -->
             <div id="bloguebersicht">
                     <nav>
-                        <button type="button" id="%blogid" data-path="">Neuer Post</button>
+                        <button type="button" id="%blogid" data-path="/addPost/%blogid">Neuer Post</button>
                     </nav>
 				
                     <article>
@@ -120,8 +121,27 @@
                     </footer>
                 </article>
             </div>
-                     
+
+            <!----- Post editieren ----->
+            <div id="addPost">
+                    <nav>
+                        <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
+                    </nav>
+
+                    <form class="form" method="get">
+                        <label for="title">Titel:</label>
+                        <input id="title" type="text" name="title"></input>
+
+                        <label for="content">Inhalt:</label>
+                        <input id="content" type="text" name="content">
+
+                        <nav>
+                            <button type="reset">Zurücksetzen</button>
+                            <button type="button" value="cancel" data-path="/bloguebersicht/%blogid">Abbrechen</button>
+                            <button type="button" value="save" data-path="/bloguebersicht/%blogid">Speichern</button>
+                        </nav>
+                    </form>
+            </div>
         </div>
-        
-        </body>
+    </body>
 </html>
