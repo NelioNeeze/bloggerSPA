@@ -1,0 +1,138 @@
+.header a {
+     text-decoration: none;
+     color: #3D3D3D;
+}
+
+.header a:hover {
+     text-decoration: underline;
+}
+
+.header a:active {
+     color: orange;
+}
+
+.header {
+    background-color:#F06D25;
+    color:#fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 80px;
+    padding-right: 60px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.menu {
+  position: relative;
+  display: inline-block;
+}
+
+
+.nav {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-top: 5px;
+    min-width: 290px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.nav ul{
+    padding-right: 35px;
+    list-style: none;
+    display: block;
+}
+
+.nav li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.nav a:hover {
+    background-color: #f1f1f1
+}
+
+.dropmenu {
+  background-color: orange;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  position: relative;
+  display:block;
+  cursor:pointer;
+  border-radius: 5px;
+}
+
+.dropcheck {
+    position: absolute;
+    left: -9999px;
+}
+
+.dropcheck:checked ~ .nav {
+  display: block;
+}
+
+.topcenterinfo {
+    text-align: center;
+    padding-left: 180px;
+    margin-top: -20px;
+}
+
+.metadata {
+    display: flex;
+    align-items: center;
+}
+
+.metadata p {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .login p{
+    visibility: hidden;
+  }
+
+  .topcenterinfo {
+    padding-left: 80px;
+  }
+}
+
+.topcenterinfo button{
+    background-color: white;
+          border: none;
+          color: #F06D25;
+          padding: 5px 25px;
+          font-family: 'Oswald', sans-serif;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          height: 35px;
+          width: 146px;
+          border-radius: 5px;
+}
+
+.login {
+    display: flex;
+}
+
+.login button {
+      background-color: orange;
+      border: none;
+      font-family: 'Oswald', sans-serif;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      height: 50px;
+      border-radius: 5px;
+      margin-left: 30px;
+}

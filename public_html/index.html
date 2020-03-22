@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/favicon.ico">
 
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/edit.css">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600|Roboto:300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script async defer src="https://apis.google.com/js/api.js"></script>
 
@@ -17,23 +23,29 @@
 </head>
 
 <body>
-<header id="header">
-    <p id="greeting"></p>
-    <button id="sign-in-or-out-button">Anmelden</button>
-    <br>
-    <nav id="navmenu">
-    </nav>
-    <div id="currentBlog">
+<header id="header" class="header">
+    <div class="menu">
+        <input id="dropcheck" class="dropcheck" type="checkbox">
+        <label for="dropcheck" class="dropmenu">Blogs</label>
+        <nav id="navmenu" class="nav">
+        </nav>
+    </div>
+
+    <div id="currentBlog" class="topcenterinfo">
+    </div>
+
+    <div class="login">
+        <p id="greeting"></p>
+        <button id="sign-in-or-out-button">Anmelden</button>
     </div>
 </header>
 
-<main id="main-content">
+<main id="main-content" class="main-content">
     <div id="content">
 
     </div>
 </main>
-
-<footer>
+<footer class="footer">
     <p>
         Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
     </p>
@@ -43,7 +55,7 @@
 
     <div id="navigation">
         <ul>
-            <li>
+            <li class="blogs">
                 <a href="/bloguebersicht/%blogid">%blogname (%postcount Beiträge)</a>
             </li>
         </ul>
@@ -52,26 +64,30 @@
     <div id="bloginfo">
         <div>
             <h2>%blogname</h2>
-            <p>Beiträge: %postcount</p>
-            <p>Erstellt am: %shortCreateDate</p>
-            <p>Bearbeitet am: %shortEditDate</p>
-            <button type="button" data-url="%url" data-action="GoogleView">Google Blogansicht</button>
+            <div class="metadata">
+                <p>Beiträge: %postcount</p>
+                <p>Erstellt am: %shortCreateDate</p>
+                <p>Bearbeitet am: %shortEditDate</p>
+                <button type="button" data-url="%url" data-action="GoogleView">Zum Blog</button>
+            </div>
         </div>
     </div>
 
     <!-- Blogübersicht -->
-    <div id="bloguebersicht">
+    <div id="bloguebersicht" class="postview">
         <nav>
-            <button type="button" id="%blogid" data-path="/addPost/%blogid">Neuer Post</button>
+            <button type="button" id="%blogid" data-path="/addPost/%blogid" class="newpostbutton">Neuer Post</button>
         </nav>
 
-        <article>
-            <header>
+        <article class="postviewbox">
+            <div>
                 <h3>%title</h3>
-                <h5><p>Erstellt am %shortCreateDate</p>
-                    <p>Bearbeitet am %shortEditDate</p>
-                    <p>%comments Kommentare</p></h5>
-            </header>
+                <p>%comments Kommentare</p>
+            </div>
+            <div>
+                <p>Erstellt am %shortCreateDate</p>
+                <p>Bearbeitet am %shortEditDate</p>
+            </div>
 
             <footer>
                 <nav>
@@ -86,28 +102,30 @@
     <!-- Detailansicht -->
     <div id="detailansicht">
         <article>
-            <nav>
-                <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
-            </nav>
-
-            <header>
-                <h3>%title</h3>
-                <h5><p>Erstellt am %longCreateDate</p>
-                    <p>Bearbeitet am %longEditDate</p>
-                    <p>%comments Kommentare</p></h5>
-
-                <nav>
-                    <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
-                    <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
+            <div class="topbar">
+                <nav class="back">
+                    <button type="button" data-path="/bloguebersicht/%blogid">Zurück</button>
                 </nav>
-            </header>
+                <div>
+                    <h3>%title</h3>
+                    <p>%comments Kommentare</p>
+                </div>
+                <div>
+                    <p>Erstellt am %longCreateDate</p>
+                    <p>Bearbeitet am %longEditDate</p>
+                </div>
+                <nav class="editbuttonstopbar">
+                    <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
+                    <button type="button" id="%postid" value="delete" data-blogid="%blogid" data-action="deletePost">Löschen</button>
+                </nav>
+            </div>
 
-            <section>
+            <section class="postcontent">
                 %content
             </section>
         </article>
 
-        <article>
+        <article class="comments">
             <header>
                 <p>Kommentar von %author am %longCreateDate</p>
             </header>
@@ -116,7 +134,7 @@
                 %content
             </section>
 
-            <footer>
+            <footer class="deletecomment">
                 <button type="button" id="%commentid" data-postid="%postid" data-blogid="%blogid"
                         data-action="deleteComment">Löschen
                 </button>
@@ -125,16 +143,16 @@
     </div>
 
     <!----- Post hinzufügen ----->
-    <div id="addPost">
-        <nav>
-            <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
+    <div id="addPost" class="newpost">
+        <nav class="backbuttonnewpost">
+            <button type="button" data-path="/bloguebersicht/%blogid">Zurück</button>
         </nav>
 
         <form id="addPostForm" class="form" method="get">
-            <label for="title">Titel:</label>
+            <label for="title" class="createposttitle">Titel:</label>
             <input id="title" type="text" name="title"></input>
 
-            <textarea id="content" type="text" name="content"></textarea>
+            <textarea id="content" type="text" name="content" class="contentbox"></textarea>
 
             <nav>
                 <button type="button" value="cancel" data-path="/bloguebersicht/%blogid">Abbrechen</button>
@@ -145,14 +163,14 @@
 
     <!---- Post editieren ---->
 
-    <div id="editor">
+    <div id="editor" class="editor">
         <form id="edit" method="post">
-            <label for="title"> Titel: </label>
-            <p id="editTitle" contenteditable="true">%title</p>
+            <label for="title" class="blogtitle"> Titel: </label>
+            <p id="editTitle" contenteditable="true" class="blogtitleedit">%title</p>
             <p id="editPublished">Erstellt: %longCreateDate</p>
             <p id="editUpdated">Bearbeitet: %longEditDate</p>
             <label for="text"> Inhalt: </label>
-            <div id="editContent" contenteditable="true">%content</div>
+            <div id="editContent" contenteditable="true" class="editbox">%content</div>
             <nav>
                 <button type="submit">Speichern</button>
                 <button type="reset">Abbrechen</button>

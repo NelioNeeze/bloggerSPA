@@ -1,0 +1,127 @@
+button {
+    cursor: pointer;
+}
+
+h2, h3, a {
+    font-family: 'Oswald', sans-serif;
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    margin: 0px;
+    background-color: #fff;
+}
+
+.postcontent {
+    font-family: 'Roboto', sans-serif;
+    width: 75%;
+    margin: auto;
+}
+
+.newpostbutton {
+    background-color: orange;
+}
+
+.comments {
+    width: 75%;
+    margin: auto;
+    margin-top: 25px;
+    font-family: 'Roboto', sans-serif;
+    background-color: #E3E3E3;
+    border-radius: 5px;
+    padding: 10px;
+    padding-left: 25px;
+}
+
+.comments p {
+    font-style: italic;
+}
+
+.deletecomment {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+#main-content button{
+  background-color: #F06D25;
+  border: none;
+  color: #fff;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.main-content {
+    min-height: 750px;
+}
+
+.postview {
+    width: 25%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.postviewbox {
+    background-color: #E8E8E8;
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+@media only screen and (max-width: 1900px) {
+  .postview {
+    width: 40%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .postview {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 850px) {
+  .postview {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .postview {
+    width: 95%;
+  }
+}
+
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    align-items: baseline;
+}
+
+.back {
+    margin-top: 30px;
+    margin-left: 12.5%;
+}
+
+.editbuttonstopbar {
+    margin-right: 12.5%;
+    margin-top: 30px;
+}
+
+.footer {
+    color: #fff;
+    background-color: #333647;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+

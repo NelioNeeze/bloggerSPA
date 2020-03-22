@@ -12,8 +12,6 @@ const navigation = {
         let li = ul.firstElementChild.cloneNode(true);
         page.firstElementChild.firstElementChild.remove();
 
-        page.getElementById("dropcheck").checked = false;
-
         if (!allBlogs)
             return;
         for (let b of allBlogs) {
@@ -83,6 +81,14 @@ const detailansicht = {
     render(currentPost, comments) {
         console.log("View: Render der Detailansicht");
 
+        let handleDelete = function (event) {
+            if (event.target.value === "delete") {
+                console.log(`View: handleSave: Löschen Button wurde gedrückt`);
+                event.preventDefault();
+                window.history.back();
+            }
+        };
+
         let page = document.getElementById("detailansicht").cloneNode(true);
         page.removeAttribute("id");
 
@@ -102,6 +108,7 @@ const detailansicht = {
                 page.append(temp);
             }
         }
+        page.addEventListener("click", handleDelete);
 
         return page;
     }

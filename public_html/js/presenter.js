@@ -16,7 +16,6 @@ const presenter = (function () {
         if (init == false) {
             model.getAllBlogs((blogs) => {
                 if (blogs) {
-                    blogId = blogs[0].blogid;
                     console.log("Presenter: Füllen der Navigation");
                     let nav = navigation.render(blogs);
                     replace("navmenu", nav.firstElementChild);
@@ -25,7 +24,7 @@ const presenter = (function () {
                     replace("currentBlog", currentBlog.render(blogs[0]));
 
                     model.getAllPostsOfBlog(blogs[0].blogid, (posts) => {
-                        replace("content", bloguebersicht.render(posts));
+                        replace("content", bloguebersicht.render(posts, blogs[0]));
                     })
                 }
             });
@@ -36,13 +35,13 @@ const presenter = (function () {
                 console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
                 document.getElementById("greeting").innerHTML = "Hallo, " + owner;
             });
+
+            //Falls auf Startseite, navigieren zu Uebersicht
+            if (window.location.pathname === "/")
+                router.navigateToPage('/blogOverview/' + blogs[0].blogid);
         }
 
         init = true;
-
-        //Falls auf Startseite, navigieren zu Uebersicht
-        if (window.location.pathname === "/")
-            router.navigateToPage('/blogOverview/' + blogId);
     }
 
     /*
@@ -225,6 +224,7 @@ const presenter = (function () {
 
             //Teste ob Blog mindestens einen Post besitzt
             model.getBlog(bid, (current) => {
+                blogId = bid;
                 // Aktuellen Blog im Header aktualisieren
                 replace("currentBlog", currentBlog.render(current));
 
@@ -247,9 +247,7 @@ const presenter = (function () {
          */
         showDetailView(bid, pid) {
             console.log(`Presenter: Aufruf von showDetailView(${bid}, ${pid})`);
-            if (!init) {
-                initPage();
-            }
+            blogId = bid;
 
             model.getPost(bid, pid, (post) => {
                 model.getAllCommentsOfPost(bid, pid, (comments) => {
@@ -263,6 +261,8 @@ const presenter = (function () {
          */
         showAddPost(bid) {
             console.log(`Presenter: Aufruf von showAddPost für Blog ID ${bid}`);
+
+            blogId = bid;
 
             model.getBlog(bid, (blog) => {
                 replace("content", addPost.render(blog));
@@ -283,6 +283,8 @@ const presenter = (function () {
         */
         showEditView(bid, pid) {
             console.log(`Presenter: Aufruf von showEditView für PostID ${pid}`);
+
+            blogId = bid;
 
             model.getBlog(bid, (blog) => {
                 model.getPost(bid, pid, (post) => {

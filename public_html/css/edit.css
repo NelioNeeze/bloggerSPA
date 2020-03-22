@@ -1,0 +1,73 @@
+.editor {
+    font-family: 'Roboto', sans-serif;
+    color: #292929;
+    width: 75%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.editor label{
+    font-family: 'Oswald', sans-serif;
+    color: #292929;
+}
+
+.editbox, .blogtitleedit{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #E0E0E0;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+.blogtitle {
+    font-size: large;
+}
+
+.backbuttonnewpost {
+    margin-bottom: 20px;
+}
+
+.contentbox {
+    width: 100%;
+    height: 50%;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 20px;
+}
+
+.newpost{
+    width: 75%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.createposttitle {
+    margin-top: 40px;
+    font-family: 'Oswald', sans-serif;
+    font-size: large;
+    color: #292929;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
