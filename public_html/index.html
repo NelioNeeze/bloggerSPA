@@ -1,162 +1,164 @@
 <!--suppress ALL -->
 <html>
-    <head>
-        <title>Blogger</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="img/favicon.ico">
+<head>
+    <title>Blogger</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/favicon.ico">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script async defer src="https://apis.google.com/js/api.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script async defer src="https://apis.google.com/js/api.js"></script>
 
-        <script src="./js/login.js" defer></script>
-        <script src="./js/model.js"defer> </script>
-        <script src="./js/presenter.js"defer></script>
-        <script src="./js/router.js"defer></script>
-        <script src="./js/view.js"defer></script>
-    </head>
+    <script src="./js/login.js" defer></script>
+    <script src="./js/model.js" defer></script>
+    <script src="./js/presenter.js" defer></script>
+    <script src="./js/router.js" defer></script>
+    <script src="./js/view.js" defer></script>
+</head>
 
-    <body>
-	    <header id="header">
-            <p id="greeting"></p>
-            <button id="sign-in-or-out-button">Anmelden</button>
-            <br>
-            <nav id="navmenu">
-            </nav>
-            <div id="currentBlog">
-            </div>
-	    </header>
-	    <hr>
-	    <main id="main-content">
-		    <div id="content">
+<body>
+<header id="header">
+    <p id="greeting"></p>
+    <button id="sign-in-or-out-button">Anmelden</button>
+    <br>
+    <nav id="navmenu">
+    </nav>
+    <div id="currentBlog">
+    </div>
+</header>
 
-            </div>
-	    </main>
-	    <hr>
-	    <footer>
-            <p>
-		        Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
-            </p>
-	    </footer>
-        
-        <div id="templates" hidden>
+<main id="main-content">
+    <div id="content">
 
-            <div id="navigation">
-                <ul>
-                    <li>
-                        <a href="/bloguebersicht/%blogid">%blogname (%postcount Beiträge)</a>
-                    </li>
-                </ul>
-            </div>
+    </div>
+</main>
 
-            <div id="bloginfo">
-                <div>
-                    <h2>%blogname</h2>
-                    <p>Beiträge: %postcount</p>
-                    <p>Erstellt am: %shortCreateDate</p>
-                    <p>Bearbeitet am: %shortEditDate</p>
-                    <button type="button" data-url="%url" data-action="GoogleView">Google Blogansicht</button>
-                </div>
-            </div>
-                
-            <!-- Blogübersicht -->
-            <div id="bloguebersicht">
-                    <nav>
-                        <button type="button" id="%blogid" data-path="/addPost/%blogid">Neuer Post</button>
-                    </nav>
-				
-                    <article>
-                            <header>
-                                 <h3>%title</h3>
-                                 <h5><p>Erstellt am %shortCreateDate</p>
-                                     <p>Bearbeitet am %shortEditDate</p>
-                                     <p>%comments Kommentare</p></h5>
-                            </header>
+<footer>
+    <p>
+        Single-Page-App entwickelt für Web Engineering I an der Beuth Hochschule
+    </p>
+</footer>
 
-                            <footer>
-                                <nav>
-                                     <button type="button" id="%postid" data-path="/detailansicht/%blogid/%postid">Ansehen</button>
-                                     <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
-                                     <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
-                                </nav>
-                            </footer>
-                    </article>	
-            </div>
-                    
-            <!-- Detailansicht -->
-            <div id="detailansicht">
-                <article>
-                    <nav>
-                            <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
-                    </nav>
-                        
-                    <header>
-                            <h3>%title</h3>
-                            <h5><p>Erstellt am %longCreateDate</p>
-                                <p>Bearbeitet am %longEditDate</p>
-                                <p>%comments Kommentare</p></h5>
-                                                
-                            <nav>
-                                 <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
-                                 <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
-                            </nav>
-                    </header>
-                        
-                    <section>
-                            %content
-                    </section>
-                </article>
-                
-                <article>
-                    <header>
-                        <p>Kommentar von %author am %longCreateDate</p>
-                    </header>
-			
-                    <section>
-                            %content
-                    </section>
-                         
-                    <footer>	
-                            <button type="button" id="%commentid" data-postid="%postid" data-blogid="%blogid"data-action="deleteComment">Löschen</button>
-                    </footer>
-                </article>
-            </div>
+<div id="templates" hidden>
 
-            <!----- Post hinzufügen ----->
-            <div id="addPost">
-                    <nav>
-                        <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
-                    </nav>
+    <div id="navigation">
+        <ul>
+            <li>
+                <a href="/bloguebersicht/%blogid">%blogname (%postcount Beiträge)</a>
+            </li>
+        </ul>
+    </div>
 
-                    <form id="addPostForm" class="form" method="get">
-                        <label for="title">Titel:</label>
-                        <input id="title" type="text" name="title"></input>
-
-                        <textarea id="content" type="text" name="content"></textarea>
-
-                        <nav>
-                            <button type="button" value="cancel" data-path="/bloguebersicht/%blogid">Abbrechen</button>
-                            <button type="button" value="save" data-path="/bloguebersicht/%blogid">Speichern</button>
-                        </nav>
-                    </form>
-            </div>
-
-            <!---- Post editieren ---->
-
-            <div id="editor">
-                    <form id="edit" method="post">
-                        <label for="title"> Titel: </label>
-                        <p id="editTitle" contenteditable="true">%title</p>
-                        <p id="editPublished">Erstellt: %longCreateDate</p>
-                        <p id="editUpdated">Bearbeitet: %longEditDate</p>
-                        <label for="text"> Inhalt: </label>
-                        <div id="editContent" contenteditable="true">%content</div>
-                        <nav>
-                            <button type="submit">Speichern</button>
-                            <button type="reset">Abbrechen</button>
-                        </nav>
-                    </form>
-            </div>
+    <div id="bloginfo">
+        <div>
+            <h2>%blogname</h2>
+            <p>Beiträge: %postcount</p>
+            <p>Erstellt am: %shortCreateDate</p>
+            <p>Bearbeitet am: %shortEditDate</p>
+            <button type="button" data-url="%url" data-action="GoogleView">Google Blogansicht</button>
         </div>
-    </body>
+    </div>
+
+    <!-- Blogübersicht -->
+    <div id="bloguebersicht">
+        <nav>
+            <button type="button" id="%blogid" data-path="/addPost/%blogid">Neuer Post</button>
+        </nav>
+
+        <article>
+            <header>
+                <h3>%title</h3>
+                <h5><p>Erstellt am %shortCreateDate</p>
+                    <p>Bearbeitet am %shortEditDate</p>
+                    <p>%comments Kommentare</p></h5>
+            </header>
+
+            <footer>
+                <nav>
+                    <button type="button" id="%postid" data-path="/detailansicht/%blogid/%postid">Ansehen</button>
+                    <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
+                    <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
+                </nav>
+            </footer>
+        </article>
+    </div>
+
+    <!-- Detailansicht -->
+    <div id="detailansicht">
+        <article>
+            <nav>
+                <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
+            </nav>
+
+            <header>
+                <h3>%title</h3>
+                <h5><p>Erstellt am %longCreateDate</p>
+                    <p>Bearbeitet am %longEditDate</p>
+                    <p>%comments Kommentare</p></h5>
+
+                <nav>
+                    <button type="button" id="%postid" data-path="/edit/%blogid/%postid">Bearbeiten</button>
+                    <button type="button" id="%postid" data-blogid="%blogid" data-action="deletePost">Löschen</button>
+                </nav>
+            </header>
+
+            <section>
+                %content
+            </section>
+        </article>
+
+        <article>
+            <header>
+                <p>Kommentar von %author am %longCreateDate</p>
+            </header>
+
+            <section>
+                %content
+            </section>
+
+            <footer>
+                <button type="button" id="%commentid" data-postid="%postid" data-blogid="%blogid"
+                        data-action="deleteComment">Löschen
+                </button>
+            </footer>
+        </article>
+    </div>
+
+    <!----- Post hinzufügen ----->
+    <div id="addPost">
+        <nav>
+            <button type="button" data-path="/bloguebersicht/%blogid">Blogübersicht</button>
+        </nav>
+
+        <form id="addPostForm" class="form" method="get">
+            <label for="title">Titel:</label>
+            <input id="title" type="text" name="title"></input>
+
+            <textarea id="content" type="text" name="content"></textarea>
+
+            <nav>
+                <button type="button" value="cancel" data-path="/bloguebersicht/%blogid">Abbrechen</button>
+                <button type="button" value="save" data-path="/bloguebersicht/%blogid">Speichern</button>
+            </nav>
+        </form>
+    </div>
+
+    <!---- Post editieren ---->
+
+    <div id="editor">
+        <form id="edit" method="post">
+            <label for="title"> Titel: </label>
+            <p id="editTitle" contenteditable="true">%title</p>
+            <p id="editPublished">Erstellt: %longCreateDate</p>
+            <p id="editUpdated">Bearbeitet: %longEditDate</p>
+            <label for="text"> Inhalt: </label>
+            <div id="editContent" contenteditable="true">%content</div>
+            <nav>
+                <button type="submit">Speichern</button>
+                <button type="reset">Abbrechen</button>
+            </nav>
+        </form>
+    </div>
+</div>
+</body>
 </html>

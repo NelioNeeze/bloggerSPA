@@ -1,11 +1,10 @@
 "use strict";
-
 /*
     Baut die Navigationsleiste
  */
 const navigation = {
     render(allBlogs) {
-        console.log("View: Füllen der Navigation");
+        console.log("View: Render der Navigation");
 
         let page = document.getElementById("navigation").cloneNode(true);
         page.removeAttribute("id");
@@ -29,8 +28,8 @@ const navigation = {
     Baut die Anzeige des momentanen Blogs
  */
 const currentBlog = {
-    render(currentBlog){
-        console.log("View: Füllen des momentanen Blogs (Header)");
+    render(currentBlog) {
+        console.log("View: Render des momentanen Blogs (Header)");
         let page = document.getElementById("bloginfo").cloneNode(true);
         page.removeAttribute("id");
 
@@ -47,30 +46,28 @@ const currentBlog = {
     Baut die Blogübersicht aus allen zu einem Blog gehörenden Posts
  */
 const bloguebersicht = {
-    render(allPosts){
-        console.log("View: Füllen der Blogübersicht");
+    render(allPosts, blog) {
+        console.log("View: Render der Blogübersicht");
 
         let page = document.getElementById("bloguebersicht").cloneNode(true);
         page.removeAttribute("id");
 
         let nav = page.querySelector("nav");
+        nav.removeAttribute("id");
         page.querySelector("nav").remove();
-        setDataInfo(nav, allPosts[0]);
+        setDataInfo(nav, blog);
         page.append(nav);
 
         let post = page.querySelector("article");
         page.querySelector("article").remove();
 
-        if(allPosts){
-            for(let p of allPosts){
+        if (allPosts) {
+            for (let p of allPosts) {
                 let temp = post.cloneNode(true);
                 setDataInfo(temp, p);
 
                 page.append(temp);
             }
-        }
-        else{
-            //TODO Nur Button für Post erstellen anzeigen lassen
         }
 
         return page;
@@ -81,8 +78,8 @@ const bloguebersicht = {
     Baut die Detailansicht aus einem Post und allen dazugehörigen Kommentaren
  */
 const detailansicht = {
-    render(currentPost, comments){
-        console.log("View: Füllen der Detailansicht");
+    render(currentPost, comments) {
+        console.log("View: Render der Detailansicht");
 
         let page = document.getElementById("detailansicht").cloneNode(true);
         page.removeAttribute("id");
@@ -95,8 +92,8 @@ const detailansicht = {
         page.firstElementChild.remove();
         page.append(post);
 
-        if(comments.length > 0){
-            for(let c of comments){
+        if (comments.length > 0) {
+            for (let c of comments) {
                 let temp = comment.cloneNode(true);
                 setDataInfo(temp, c);
 
@@ -113,14 +110,16 @@ const detailansicht = {
 */
 const editView = {
     render(blog, post) {
+        console.log(`View: Render der editView`);
+
         let page = document.getElementById("editor").cloneNode(true);
         page.removeAttribute("id");
 
-        if(post){
+        if (post) {
             setDataInfo(page, post);
         }
 
-        let speichern = function(event) {
+        let speichern = function (event) {
             event.preventDefault();
 
             let titleElem = page.querySelectorAll("p")[0];
@@ -129,16 +128,16 @@ const editView = {
 
             if (!(/[a-zA-Z0-9]/.test(title.charAt(0)))) {
                 alert("Der erste Buchstabe des Titels muss alphanumerisch sein.");
-                while(titleElem.hasChildNodes()){
+                while (titleElem.hasChildNodes()) {
                     titleElem.removeChild(titleElem.firstChild);
                 }
                 return false;
-            }else if (titleElem.firstChild){
+            } else if (titleElem.firstChild) {
                 let children = titleElem.children;
-                for(let i = 0; i < children.length; i++){
+                for (let i = 0; i < children.length; i++) {
                     let child = children[i];
-                    if (child.tagName === "DIV"){
-                        while(titleElem.hasChildNodes()){
+                    if (child.tagName === "DIV") {
+                        while (titleElem.hasChildNodes()) {
                             titleElem.removeChild(titleElem.firstChild);
                         }
                         alert("Der Titel darf keine Umbrüche enthalten.");
@@ -146,8 +145,8 @@ const editView = {
                     }
                 }
             }
-            if(confirm("Änderungen speichern?")) {
-                if(post) {
+            if (confirm("Änderungen speichern?")) {
+                if (post) {
                     post.title = title;
                     post.content = content;
                     presenter.editPost(blog.blogid, post.postid, post.title, post.content);
@@ -160,8 +159,8 @@ const editView = {
             }
         };
 
-        let zurueck = function(event) {
-            if(confirm("Nicht speichern?"))
+        let zurueck = function (event) {
+            if (confirm("Nicht speichern?"))
                 window.history.back();
         };
 
@@ -180,8 +179,8 @@ const editView = {
     Formular für das Anlegen eines Posts
  */
 const addPost = {
-    render(blog){
-        console.log(`View: Anlegen eines neuen Posts in Blog ${blog.blogname}`);
+    render(blog) {
+        console.log(`View: Render für Anlegen eines neuen Posts in Blog ${blog.blogname}`);
 
         let handleSave = function (event) {
             if (event.target.value === "save") {
@@ -204,9 +203,9 @@ const addPost = {
 /*
     Ersetzt ein Element element mit dem Objekt object
  */
-function setDataInfo(element, object){
+function setDataInfo(element, object) {
     let cont = element.innerHTML;
-    for (let key in object){
+    for (let key in object) {
         let rexp = new RegExp("%" + key, "g");
         cont = cont.replace(rexp, object[key]);
     }

@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 "use strict";
 
 (function () {
 
     var GoogleAuth;
     var SCOPE = 'https://www.googleapis.com/auth/blogger';
+
     function handleClientLoad() {
         // Load the API's client and auth2 modules.
         // Call the initClient function after the modules load.
@@ -66,7 +62,7 @@
             router.navigateToPage(window.location.pathname);
         } else {
             $('#sign-in-or-out-button').html('Anmelden');
-            $('#auth-status').html('Abgemeldet bei Google'); 
+            $('#auth-status').html('Abgemeldet bei Google');
             console.log("---------setSigninStatus: Abgemeldet---------");
             model.setLoggedIn(false);
             router.navigateToPage('/');
@@ -76,7 +72,7 @@
     function updateSigninStatus(isSignedIn) {
         setSigninStatus();
     }
-    
+
     // After Loading, handleClientLoad is called
     window.addEventListener("load", handleClientLoad);
 

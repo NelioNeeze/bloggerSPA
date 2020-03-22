@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 "use strict";
 
 const router = (function () {
@@ -58,7 +53,7 @@ const router = (function () {
         presenter.showBlogOverview(blogId);
     });
 
-    router.addRoute( 'detailansicht', function (url) {
+    router.addRoute('detailansicht', function (url) {
         let temp = url.split('detailansicht/')[1].trim();
         var blogId = temp.split('/')[0];
         var postId = temp.split('/')[1];
@@ -70,7 +65,7 @@ const router = (function () {
         presenter.showAddPost(blogId);
     });
 
-    router.addRoute('edit',function (url) {
+    router.addRoute('edit', function (url) {
         let temp = url.split('edit/')[1].trim();
         var blogId = temp.split('/')[0];
         var postId = temp.split('/')[1];

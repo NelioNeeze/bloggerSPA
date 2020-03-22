@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 "use strict";
 const presenter = (function () {
     // Private Variablen und Funktionen
@@ -19,7 +13,7 @@ const presenter = (function () {
         console.log("Presenter: Aufruf von initPage()");
         document.getElementById("main-content").addEventListener("click", handleClicks);
         document.getElementById("header").addEventListener("click", handleClicks);
-        if(init == false) {
+        if (init == false) {
             model.getAllBlogs((blogs) => {
                 if (blogs) {
                     console.log("Presenter: Füllen der Navigation");
@@ -27,12 +21,10 @@ const presenter = (function () {
                     replace("navmenu", nav.firstElementChild);
 
                     console.log("Presenter: Füllen des aktuellsten Blogs (Header)");
-                    let current = currentBlog.render(blogs[0]);
-                    replace("currentBlog", current);
+                    replace("currentBlog", currentBlog.render(blogs[0]));
 
                     model.getAllPostsOfBlog(blogs[0].blogid, (posts) => {
-                        let currentOverview = bloguebersicht.render(posts);
-                        replace("content", currentOverview);
+                        replace("content", bloguebersicht.render(posts));
                     })
                 }
             });
@@ -45,8 +37,8 @@ const presenter = (function () {
             });
         }
 
-        // Das muss später an geeigneter Stelle in Ihren Code hinein.
         init = true;
+
         //Falls auf Startseite, navigieren zu Uebersicht
         if (window.location.pathname === "/")
             router.navigateToPage('/blogOverview/' + blogId);
@@ -85,11 +77,11 @@ const presenter = (function () {
     /*
         Zentraler Eventhandler
      */
-    function handleClicks(event){
+    function handleClicks(event) {
         console.log(`Presenter: Aufruf von handleClicks()`);
         let source = null;
 
-        switch(event.target.tagName){
+        switch (event.target.tagName) {
             case "BUTTON":
                 console.log(`Presenter: Button ${event.target.innerHTML} wurde geklickt.`);
                 source = event.target;
@@ -100,9 +92,9 @@ const presenter = (function () {
                 break;
         }
 
-        if(source){
+        if (source) {
             let action = source.dataset.action;
-            if(action) {
+            if (action) {
                 console.log(`Presenter: Button ${event.target.innerHTML} besitzt eine data-action: ${action}`);
                 switch (action) {
                     case "deletePost":
@@ -120,24 +112,24 @@ const presenter = (function () {
             let path = source.dataset.path;
             if (path)
                 console.log(`Presenter: Button ${event.target.innerHTML} bestitzt einen data-path: ${path}`);
-                router.navigateToPage(path);
+            router.navigateToPage(path);
         }
     }
 
     /*
         Erstellen eines neuen Posts
      */
-    function addNewPost(bid, title, content){
+    function addNewPost(bid, title, content) {
         console.log(`Presenter: Aufruf von addNewPost() mit BlogID ${bid}`);
 
-        if(bid){
+        if (bid) {
             model.addNewPost(bid, title, content, (success) => {
                 //TODO checken ob erfolgreich oder nicht
 
                 //Header aktualisieren
                 model.getAllBlogs((blogs) => {
                     replace("navmenu", navigation.render(blogs));
-                    let current = model.getBlog(bid, (current) =>{
+                    let current = model.getBlog(bid, (current) => {
                         replace("currentBlog", currentBlog.render(current));
                     })
                 })
@@ -148,20 +140,22 @@ const presenter = (function () {
     /*
         Öffnet die Google View in einem neuen Browserfenster
      */
-    function googleView(url){
-        window.open(url, "_blank");
+    function googleView(url) {
         console.log("Presenter: Vieweransicht von Google mit URL " + url + " wurde aufgerufen");
+
+        window.open(url, "_blank");
     }
 
     /*
         Bearbeiten eines Posts
      */
-    function updatePost(bid, pid, title, content){
+    function updatePost(bid, pid, title, content) {
         console.log(`Presenter: Aufruf von updatePost() mit BlogID ${bid} und PostID ${pid}`);
 
-        if(bid && pid){
+        if (bid && pid) {
             model.updatePost(bid, pid, title, content, (success) => {
                 //TODO checken ob erfolgreich oder nicht
+                console.log(`Success: ${success}`);
             })
         }
     }
@@ -169,17 +163,17 @@ const presenter = (function () {
     /*
         Löschen eines Posts
      */
-    function deletePost(bid, pid){
+    function deletePost(bid, pid) {
         console.log(`Presenter: Aufruf von deletePost() mit BlogID ${bid} und PostID ${pid}`);
 
-        if(bid && pid){
+        if (bid && pid) {
             model.deletePost(bid, pid, (success) => {
                 //TODO checken ob erfolgreich oder nicht
 
                 //Header aktualisieren
                 model.getAllBlogs((blogs) => {
                     replace("navmenu", navigation.render(blogs));
-                    let current = model.getBlog(bid, (current) =>{
+                    let current = model.getBlog(bid, (current) => {
                         replace("currentBlog", currentBlog.render(current));
                     })
                 })
@@ -190,10 +184,10 @@ const presenter = (function () {
     /*
         Löschen eines Kommentars
      */
-    function deleteComment(bid, pid, cid){
+    function deleteComment(bid, pid, cid) {
         console.log(`Presenter: Aufruf von deleteComment() mit BlogID ${bid}, PostID ${pid} und CommentID ${cid}`);
 
-        if(bid && pid && cid){
+        if (bid && pid && cid) {
             model.deleteComment(bid, pid, cid, (success) => {
                 //TODO checken ob erfolgreich oder nicht
             })
@@ -224,26 +218,25 @@ const presenter = (function () {
          */
         showBlogOverview(bid) {
             console.log(`Presenter: Aufruf von showBlogOverview(${bid})`);
-            if(!init){
+            if (!init) {
                 initPage();
             }
 
             //Teste ob Blog mindestens einen Post besitzt
             model.getBlog(bid, (current) => {
                 // Aktuellen Blog im Header aktualisieren
-                let activeBlog = currentBlog.render(current);
-                replace("currentBlog", activeBlog);
+                replace("currentBlog", currentBlog.render(current));
 
-                if(current.postcount > 0){
+                if (current.postcount > 0) {
                     //Wenn ja, nehme alle Blogposts
                     model.getAllPostsOfBlog(bid, (posts) => {
                         //Und übergebe sie an die View
-                        let blogOverview = bloguebersicht.render(posts);
-                        replace("content", blogOverview);
+                        replace("content", bloguebersicht.render(posts, current));
                     });
                 }
-                else{
-                    replace("content", "");
+                //Wenn es keine Posts gibt, zeige nur Neuer Post Button
+                else {
+                    replace("content", bloguebersicht.render(null, current));
                 }
             })
         },
@@ -253,14 +246,13 @@ const presenter = (function () {
          */
         showDetailView(bid, pid) {
             console.log(`Presenter: Aufruf von showDetailView(${bid}, ${pid})`);
-            if(!init){
+            if (!init) {
                 initPage();
             }
 
             model.getPost(bid, pid, (post) => {
                 model.getAllCommentsOfPost(bid, pid, (comments) => {
-                    let detailView = detailansicht.render(post, comments);
-                    replace("content", detailView);
+                    replace("content", detailansicht.render(post, comments));
                 })
             })
         },
@@ -272,15 +264,14 @@ const presenter = (function () {
             console.log(`Presenter: Aufruf von showAddPost für Blog ID ${bid}`);
 
             model.getBlog(bid, (blog) => {
-                let addView = addPost.render(blog);
-                replace("content", addView);
+                replace("content", addPost.render(blog));
             })
         },
 
         /*
             Öffentliche Methode zum hinzufügen von Posts zu einem Blog
          */
-         addPost(bid, title, content){
+        addPost(bid, title, content) {
             console.log(`Presenter: Aufruf von addPost() für neuen Post ${title}`);
 
             addNewPost(bid, title, content);
@@ -289,21 +280,20 @@ const presenter = (function () {
         /*
             Wird vom Router aufgerufen, wenn ein Post editiert werden soll
         */
-        showEditView(bid, pid){
+        showEditView(bid, pid) {
             console.log(`Presenter: Aufruf von showEditView für PostID ${pid}`);
 
             model.getBlog(bid, (blog) => {
                 model.getPost(bid, pid, (post) => {
-                    let edit = editView.render(blog, post);
-                    replace("content", edit);
+                    replace("content", editView.render(blog, post));
                 })
             })
         },
 
         /*
-            Öffentliche Methode zum updaten eines Posts
+            Öffentliche Methode zum editieren eines Posts
          */
-        editPost(bid, pid, title, content){
+        editPost(bid, pid, title, content) {
             console.log(`Presenter: Aufruf von editPost() für bestehenden Post ${pid}`);
 
             updatePost(bid, pid, title, content);

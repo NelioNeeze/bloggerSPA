@@ -1,6 +1,3 @@
-/*
-    Adresse über die man auf die Webschnittstelle meines Blogs zugreifen kann:
-*/
 "use strict";
 const model = (function () {
     // Private Variablen
@@ -10,6 +7,17 @@ const model = (function () {
 
     // Private Funktionen
     /*
+        Formatiert einen String so, dass er immer zwei Ziffern enthält
+        Bsp: 15:3 als Uhrzeit wird zu 15:03
+     */
+    function toStandard(date) {
+        if (date < 10) {
+            date = "0" + date;
+        }
+        return date;
+    }
+
+    /*
         Formatiert den Datum-String in date in zwei mögliche Datum-Strings:
         long = false: 24.10.2018
         long = true: Mittwoch, 24. Oktober 2018, 12:21
@@ -17,28 +25,26 @@ const model = (function () {
     function formatDate(date, long) {
         var date1 = new Date(date);
         // Kurzes Format
-        if(!long){
-            let newDate = date1.getDate() + "." + (date1.getMonth() + 1) + "." + date1.getFullYear();
+        if (!long) {
+            let newDate = toStandard(date1.getDate()) + "." + toStandard((date1.getMonth() + 1)) + "." + date1.getFullYear();
             return newDate;
         }
         // Langes Format
-        else{
+        else {
             let weekdays =
                 ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
             let months =
                 ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
-            let minutes = date1.getMinutes();
-            if(minutes < 10)
-                minutes = "0" + minutes;
-            return weekdays[date1.getDay()] + ", " + date1.getDate() + "." + months[date1.getMonth() - 1] + " " + date1.getFullYear()+ ", " + date1.getHours() + ":" + minutes;
+            return weekdays[date1.getDay()] + ", " + toStandard(date1.getDate()) + "." + months[date1.getMonth() - 1] + " " + date1.getFullYear()
+                + ", " + toStandard(date1.getHours()) + ":" + toStandard(date1.getMinutes());
         }
     }
 
     /*
         Konstruktoren für Daten-Objekte
      */
-    function Blog(blog){
+    function Blog(blog) {
         console.log(`Model: Erstellen eines Blogobjekts über den Konstruktor: ${blog.name}`);
 
         this.blogid = blog.id;
@@ -53,7 +59,7 @@ const model = (function () {
         this.shortEditDate = formatDate(blog.updated, false);
     }
 
-    function Post(post){
+    function Post(post) {
         console.log(`Model: Erstellen eines Postobjekts über den Konstruktor: ${post.title}`);
 
         this.postid = post.id;
@@ -69,7 +75,7 @@ const model = (function () {
         this.shortEditDate = formatDate(post.updated, false);
     }
 
-    function Comment(comment){
+    function Comment(comment) {
         console.log(`Model: Erstellen eines Commentobjekts über den Konstruktor.: ${comment.id} by ${comment.author.displayName}`);
 
         this.commentid = comment.id;
@@ -87,11 +93,11 @@ const model = (function () {
 
     // Oeffentliche Methoden
     return {
-        setLoggedIn(b){
+        setLoggedIn(b) {
             loggedIn = b;
         },
 
-        isLoggedIn(){
+        isLoggedIn() {
             return loggedIn;
         },
 
@@ -122,7 +128,7 @@ const model = (function () {
             // Execute the API request.
             request.execute((result) => {
                 let blogs = [];
-                if(result.items){
+                if (result.items) {
                     for (let b of result.items) {
                         blogs.push(new Blog(b));
                     }
@@ -142,7 +148,7 @@ const model = (function () {
             });
             // Execute the API request.
             request.execute((result) => {
-                if(result)
+                if (result)
                     callback(new Blog(result));
                 else callback();
             });
@@ -161,7 +167,7 @@ const model = (function () {
             // Execute the API request.
             request.execute((result) => {
                 let posts = [];
-                if(result.items){
+                if (result.items) {
                     for (let p of result.items) {
                         posts.push(new Post(p));
                     }
@@ -181,7 +187,7 @@ const model = (function () {
             });
             // Execute the API request.
             request.execute((result) => {
-                if(result)
+                if (result)
                     callback(new Post(result));
             });
         },
@@ -199,7 +205,7 @@ const model = (function () {
             // Execute the API request.
             request.execute((result) => {
                 let comments = [];
-                if(result.items){
+                if (result.items) {
                     for (let c of result.items) {
                         comments.push(new Comment(c));
                     }
@@ -217,7 +223,6 @@ const model = (function () {
         deleteComment(bid, pid, cid, callback) {
             console.log(`Model: Aufruf von deleteComment(${bid}, ${pid}, ${cid})`);
             var path = pathBlogs + "/" + bid + '/posts/' + pid + "/comments/" + cid;
-            console.log(path);
             var request = gapi.client.request({
                 'method': 'DELETE',
                 'path': path
@@ -283,7 +288,6 @@ const model = (function () {
         deletePost(bid, pid, callback) {
             console.log(`Model: Aufruf von deletePost(${bid}, ${pid})`);
             var path = pathBlogs + "/" + bid + '/posts/' + pid;
-            console.log(path);
             var request = gapi.client.request({
                 'method': 'DELETE',
                 'path': path
