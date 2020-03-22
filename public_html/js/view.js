@@ -12,6 +12,8 @@ const navigation = {
         let li = ul.firstElementChild.cloneNode(true);
         page.firstElementChild.firstElementChild.remove();
 
+        page.getElementById("dropcheck").checked = false;
+
         if (!allBlogs)
             return;
         for (let b of allBlogs) {
