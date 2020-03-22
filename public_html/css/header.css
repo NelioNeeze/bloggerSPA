@@ -19,8 +19,8 @@
     align-items: center;
     padding-left: 80px;
     padding-right: 60px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    height: 13%;
+    min-height: 130px;
 }
 
 .menu {
@@ -93,15 +93,6 @@
     padding-left: 15px;
 }
 
-@media only screen and (max-width: 1300px) {
-  .login p{
-    visibility: hidden;
-  }
-
-  .topcenterinfo {
-    padding-left: 80px;
-  }
-}
 
 .topcenterinfo button{
     background-color: white;
@@ -120,6 +111,7 @@
 
 .login {
     display: flex;
+    text-align: center;
 }
 
 .login button {

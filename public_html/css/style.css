@@ -21,6 +21,12 @@ body {
     margin: auto;
 }
 
+ img{
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
 .newpostbutton {
     background-color: orange;
 }
@@ -58,7 +64,7 @@ body {
 }
 
 .main-content {
-    min-height: 750px;
+    min-height: 76vh;
 }
 
 .postview {
@@ -74,31 +80,6 @@ body {
     margin-top: 25px;
     margin-bottom: 25px;
 }
-
-@media only screen and (max-width: 1900px) {
-  .postview {
-    width: 40%;
-  }
-}
-
-@media only screen and (max-width: 1200px) {
-  .postview {
-    width: 60%;
-  }
-}
-
-@media only screen and (max-width: 850px) {
-  .postview {
-    width: 80%;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .postview {
-    width: 95%;
-  }
-}
-
 
 .topbar {
     display: flex;
@@ -121,7 +102,14 @@ body {
     color: #fff;
     background-color: #333647;
     text-align: center;
-    padding: 20px;
+    height: 10%;
     margin-top: 50px;
 }
+
+.footer p {
+    padding-top: 2%;
+    padding-right: 25px;
+    padding-left: 25px;
+}
+
 
