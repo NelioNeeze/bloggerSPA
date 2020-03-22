@@ -16,6 +16,7 @@ const presenter = (function () {
         if (init == false) {
             model.getAllBlogs((blogs) => {
                 if (blogs) {
+                    blogId = blogs[0].blogid;
                     console.log("Presenter: Füllen der Navigation");
                     let nav = navigation.render(blogs);
                     replace("navmenu", nav.firstElementChild);
@@ -33,7 +34,7 @@ const presenter = (function () {
             model.getSelf((result) => {
                 owner = result.displayName;
                 console.log(`Presenter: Nutzer*in ${owner} hat sich angemeldet.`);
-                document.getElementById("greeting").innerHTML = "Greetings, " + owner;
+                document.getElementById("greeting").innerHTML = "Hallo, " + owner;
             });
         }
 
